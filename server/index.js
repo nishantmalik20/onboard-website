@@ -18,6 +18,9 @@ dotenv.config({ path: path.join(__dirname, '.env') });
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Trust Railway's proxy (required for rate limiting behind reverse proxy)
+app.set('trust proxy', 1);
+
 // Security headers
 app.use(helmet());
 
