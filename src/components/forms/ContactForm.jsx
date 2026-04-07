@@ -58,12 +58,16 @@ export default function ContactForm() {
     if (!validate()) return;
 
     setLoading(true);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
+        signal: controller.signal,
       });
+      clearTimeout(timeout);
       const data = await res.json();
 
       if (!res.ok || !data.success) {
@@ -73,7 +77,11 @@ export default function ContactForm() {
       setToast({ type: 'success', message: 'Message sent! We will get back to you shortly.' });
       setForm({ name: '', email: '', phone: '', message: '' });
     } catch (err) {
-      setToast({ type: 'error', message: err.message || 'Something went wrong. Please try again or call us directly.' });
+      clearTimeout(timeout);
+      const message = err.name === 'AbortError'
+        ? 'Request timed out. Please try again or call us directly.'
+        : err.message || 'Something went wrong. Please try again or call us directly.';
+      setToast({ type: 'error', message });
     } finally {
       setLoading(false);
       setTimeout(() => setToast(null), 5000);
