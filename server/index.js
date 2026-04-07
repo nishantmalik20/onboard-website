@@ -22,13 +22,24 @@ const PORT = process.env.PORT || 3001;
 app.use(helmet());
 
 // CORS configuration
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://localhost:5173',
+  'https://onboardprints.ca',
+  'https://www.onboardprints.ca',
+];
+if (process.env.VERCEL_URL) allowedOrigins.push(`https://${process.env.VERCEL_URL}`);
+if (process.env.FRONTEND_URL) allowedOrigins.push(process.env.FRONTEND_URL);
+
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://localhost:5173',
-    'https://onboardprints.ca',
-    'https://www.onboardprints.ca',
-  ],
+  origin: (origin, callback) => {
+    // Allow requests with no origin (Railway health checks, Postman, etc.)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+      return callback(null, true);
+    }
+    callback(new Error(`CORS: origin ${origin} not allowed`));
+  },
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
