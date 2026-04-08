@@ -11,7 +11,7 @@ export default function WebArchitecture() {
   const sectionRef = useRef(null);
   const splineRef = useRef(null);
   const [splineInView, setSplineInView] = useState(false);
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   useEffect(() => {
     if (!splineRef.current) return;
@@ -96,8 +96,17 @@ export default function WebArchitecture() {
           </div>
         </div>
 
-        {/* Right: 3D Element (desktop only) */}
-        {!isMobile && (
+        {/* Right: static image on mobile, Spline on tablet+ */}
+        {isMobile ? (
+          <div className="w-full h-[280px] overflow-hidden" style={{ borderRadius: '2rem' }}>
+            <img
+              src="https://images.unsplash.com/photo-1624996752380-8ec242e0f85d?q=80&w=900&auto=format&fit=crop"
+              alt="Web development and digital architecture"
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        ) : (
           <div ref={splineRef} className="w-full lg:w-1/2 h-[50vh] lg:h-[70vh] flex items-center justify-center relative overflow-hidden group">
             {splineInView ? (
               <Suspense fallback={<div className="w-full h-full bg-dark/50 animate-pulse" style={{ borderRadius: '2rem' }} />}>

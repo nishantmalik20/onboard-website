@@ -142,7 +142,7 @@ export default function Process() {
   const cardsRef = useRef([]);
   const splineRef = useRef(null);
   const [splineInView, setSplineInView] = useState(false);
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   useEffect(() => {
     if (!splineRef.current) return;
