@@ -29,7 +29,8 @@ export default async function handler(req, res) {
     updateEnabled: true,
   };
 
-  if (phone) payload.attributes.SMS = phone;
+  // Note: SMS field removed — Brevo requires E.164 format (+1XXXXXXXXXX)
+  // which most form submissions don't use. Phone is still captured via email notification.
 
   try {
     const brevoRes = await fetch(BREVO_API_URL, {

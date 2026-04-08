@@ -25,8 +25,7 @@ export async function syncContactToBrevo({ name, email, phone, company, service,
     updateEnabled: true,
   };
 
-  // Only add SMS if phone provided (Brevo expects E.164 format or empty)
-  if (phone) payload.attributes.SMS = phone;
+  // SMS field omitted — Brevo requires E.164 format which most form inputs don't provide.
 
   try {
     const res = await fetch(BREVO_API_URL, {
