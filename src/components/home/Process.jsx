@@ -142,6 +142,7 @@ export default function Process() {
   const cardsRef = useRef([]);
   const splineRef = useRef(null);
   const [splineInView, setSplineInView] = useState(false);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
 
   useEffect(() => {
     if (!splineRef.current) return;
@@ -267,22 +268,24 @@ export default function Process() {
             ))}
           </div>
 
-          {/* Right Column: Sticky Spline Viewer */}
-          <div ref={splineRef} className="w-full h-[50vh] lg:h-auto lg:w-1/2 relative z-0 bg-dark">
-            <div className="lg:sticky top-0 h-full lg:h-screen w-full flex flex-col items-center justify-center overflow-hidden">
-              <div className="spline-wrapper w-full h-full flex items-center justify-center origin-center">
-                <div className="w-full h-full">
-                  {splineInView ? (
-                    <Suspense fallback={<div className="w-full h-full bg-dark/50 animate-pulse" style={{ borderRadius: '2rem' }} />}>
-                      <Spline scene="https://prod.spline.design/D7tRYa-g2xZBohff/scene.splinecode" />
-                    </Suspense>
-                  ) : (
-                    <div className="w-full h-full bg-dark/50 animate-pulse" style={{ borderRadius: '2rem' }} />
-                  )}
+          {/* Right Column: Sticky Spline Viewer (desktop only) */}
+          {!isMobile && (
+            <div ref={splineRef} className="hidden lg:block lg:w-1/2 relative z-0 bg-dark">
+              <div className="lg:sticky top-0 h-full lg:h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+                <div className="spline-wrapper w-full h-full flex items-center justify-center origin-center">
+                  <div className="w-full h-full">
+                    {splineInView ? (
+                      <Suspense fallback={<div className="w-full h-full bg-dark/50 animate-pulse" style={{ borderRadius: '2rem' }} />}>
+                        <Spline scene="https://prod.spline.design/D7tRYa-g2xZBohff/scene.splinecode" />
+                      </Suspense>
+                    ) : (
+                      <div className="w-full h-full bg-dark/50 animate-pulse" style={{ borderRadius: '2rem' }} />
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </section>

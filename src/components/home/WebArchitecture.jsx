@@ -11,6 +11,7 @@ export default function WebArchitecture() {
   const sectionRef = useRef(null);
   const splineRef = useRef(null);
   const [splineInView, setSplineInView] = useState(false);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
 
   useEffect(() => {
     if (!splineRef.current) return;
@@ -95,16 +96,18 @@ export default function WebArchitecture() {
           </div>
         </div>
 
-        {/* Right: 3D Element */}
-        <div ref={splineRef} className="w-full lg:w-1/2 h-[50vh] lg:h-[70vh] flex items-center justify-center relative overflow-hidden group">
-          {splineInView ? (
-            <Suspense fallback={<div className="w-full h-full bg-dark/50 animate-pulse" style={{ borderRadius: '2rem' }} />}>
-              <Spline scene="https://prod.spline.design/URLqcaBTJnqQtEnx/scene.splinecode" />
-            </Suspense>
-          ) : (
-            <div className="w-full h-full bg-dark/50 animate-pulse" style={{ borderRadius: '2rem' }} />
-          )}
-        </div>
+        {/* Right: 3D Element (desktop only) */}
+        {!isMobile && (
+          <div ref={splineRef} className="w-full lg:w-1/2 h-[50vh] lg:h-[70vh] flex items-center justify-center relative overflow-hidden group">
+            {splineInView ? (
+              <Suspense fallback={<div className="w-full h-full bg-dark/50 animate-pulse" style={{ borderRadius: '2rem' }} />}>
+                <Spline scene="https://prod.spline.design/URLqcaBTJnqQtEnx/scene.splinecode" />
+              </Suspense>
+            ) : (
+              <div className="w-full h-full bg-dark/50 animate-pulse" style={{ borderRadius: '2rem' }} />
+            )}
+          </div>
+        )}
 
       </div>
     </section>
