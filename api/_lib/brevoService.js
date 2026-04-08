@@ -1,13 +1,13 @@
-const BREVO_API_KEY = process.env.BREVO_API_KEY;
 const BREVO_API_URL = 'https://api.brevo.com/v3/contacts';
 
 /**
  * Add or update a contact in Brevo.
- * If optInMarketing is false, contact is added to a "No Marketing" list.
+ * If optInMarketing is false, contact is added to "No Marketing" list.
  * If true, contact is added to the "Marketing" list.
  */
 export async function syncContactToBrevo({ name, email, phone, company, service, source, optInMarketing }) {
-  if (!BREVO_API_KEY) {
+  const apiKey = process.env.BREVO_API_KEY;
+  if (!apiKey) {
     console.warn('[Brevo] API key not configured — skipping contact sync.');
     return null;
   }
@@ -20,35 +20,34 @@ export async function syncContactToBrevo({ name, email, phone, company, service,
     attributes: {
       FIRSTNAME: firstName,
       LASTNAME: lastName,
-      SMS: phone || '',
-      COMPANY: company || '',
-      SERVICE_INTEREST: service || '',
-      SOURCE: source || 'website',
-      OPT_IN_MARKETING: optInMarketing ? 'true' : 'false',
     },
     listIds: optInMarketing ? [3] : [4],
     updateEnabled: true,
   };
 
+  // Only add SMS if phone provided (Brevo expects E.164 format or empty)
+  if (phone) payload.attributes.SMS = phone;
+
   try {
     const res = await fetch(BREVO_API_URL, {
       method: 'POST',
       headers: {
-        'api-key': BREVO_API_KEY,
+        'api-key': apiKey,
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
       body: JSON.stringify(payload),
     });
 
+    const responseText = await res.text();
+
     if (!res.ok) {
-      const error = await res.text();
-      console.error('[Brevo] Failed to sync contact:', error);
+      console.error(`[Brevo] Failed to sync contact (${res.status}):`, responseText);
       return null;
     }
 
     console.log(`[Brevo] Contact synced: ${email} (marketing: ${optInMarketing})`);
-    return await res.json();
+    return responseText ? JSON.parse(responseText) : { success: true };
   } catch (err) {
     console.error('[Brevo] Error syncing contact:', err.message);
     return null;
