@@ -11,19 +11,15 @@ export default async function handler(req, res) {
     return res.status(400).json({ success: false, error: 'Email is required.' });
   }
 
-  try {
-    await syncContactToBrevo({
-      name: name || '',
-      email,
-      phone: phone || '',
-      company: company || '',
-      service: service || '',
-      source: source || 'website',
-      optInMarketing: optInMarketing !== false,
-    });
-    res.json({ success: true });
-  } catch (err) {
-    console.error('[Brevo] Sync error:', err);
-    res.json({ success: false });
-  }
+  const result = await syncContactToBrevo({
+    name: name || '',
+    email,
+    phone: phone || '',
+    company: company || '',
+    service: service || '',
+    source: source || 'website',
+    optInMarketing: optInMarketing !== false,
+  });
+
+  res.json({ success: result !== null, brevoResult: result });
 }
