@@ -1,5 +1,3 @@
-import multer from 'multer';
-import path from 'path';
 import { sendQuoteNotification, sendContactConfirmation } from './_lib/emailService.js';
 import { syncContactToBrevo } from './_lib/brevoService.js';
 
@@ -7,27 +5,43 @@ export const config = {
   api: { bodyParser: false },
 };
 
-const ALLOWED_EXTENSIONS = new Set([
-  '.pdf', '.ai', '.psd', '.eps', '.svg',
-  '.png', '.jpg', '.jpeg', '.tiff', '.tif',
-]);
-
-const upload = multer({
-  storage: multer.memoryStorage(),
-  fileFilter: (_req, file, cb) => {
-    const ext = path.extname(file.originalname).toLowerCase();
-    if (ALLOWED_EXTENSIONS.has(ext)) cb(null, true);
-    else cb(new Error(`File type not allowed: ${ext}`));
-  },
-  limits: { fileSize: 10 * 1024 * 1024, files: 5 },
-});
-
-function runMiddleware(req, res, fn) {
+function parseMultipart(req) {
   return new Promise((resolve, reject) => {
-    fn(req, res, (result) => {
-      if (result instanceof Error) return reject(result);
-      resolve(result);
+    const chunks = [];
+    req.on('data', (chunk) => chunks.push(chunk));
+    req.on('end', () => {
+      const buffer = Buffer.concat(chunks);
+      const contentType = req.headers['content-type'] || '';
+      const boundaryMatch = contentType.match(/boundary=(.+)/);
+      if (!boundaryMatch) return reject(new Error('No boundary found'));
+
+      const boundary = boundaryMatch[1];
+      const parts = buffer.toString().split(`--${boundary}`).slice(1, -1);
+      const fields = {};
+      const files = [];
+
+      for (const part of parts) {
+        const [rawHeaders, ...bodyParts] = part.split('\r\n\r\n');
+        const body = bodyParts.join('\r\n\r\n').replace(/\r\n$/, '');
+        const nameMatch = rawHeaders.match(/name="([^"]+)"/);
+        const filenameMatch = rawHeaders.match(/filename="([^"]+)"/);
+
+        if (!nameMatch) continue;
+
+        if (filenameMatch && filenameMatch[1]) {
+          files.push({
+            name: filenameMatch[1],
+            size: Buffer.byteLength(body),
+            buffer: Buffer.from(body, 'binary'),
+          });
+        } else {
+          fields[nameMatch[1]] = body;
+        }
+      }
+
+      resolve({ fields, files });
     });
+    req.on('error', reject);
   });
 }
 
@@ -36,13 +50,16 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  let fields, files;
   try {
-    await runMiddleware(req, res, upload.array('files', 5));
+    const parsed = await parseMultipart(req);
+    fields = parsed.fields;
+    files = parsed.files;
   } catch (err) {
-    return res.status(400).json({ success: false, error: err.message });
+    return res.status(400).json({ success: false, error: 'Failed to parse form data.' });
   }
 
-  const { name, email, phone, company, service, description, quantity, deadline, budget, optInMarketing } = req.body;
+  const { name, email, phone, company, service, description, quantity, deadline, budget, optInMarketing } = fields;
 
   const errors = [];
   if (!name || name.trim().length < 2) errors.push('Name must be at least 2 characters.');
@@ -55,12 +72,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    const files = (req.files || []).map((f) => ({
-      name: f.originalname,
-      size: f.size,
-      buffer: f.buffer,
-    }));
-
     await sendQuoteNotification({
       name: name.trim(),
       email: email.trim(),
@@ -75,7 +86,7 @@ export default async function handler(req, res) {
     });
     await sendContactConfirmation(email.trim(), name.trim());
 
-    // Sync to Brevo (await so Vercel doesn't kill the function before it completes)
+    // Sync to Brevo
     try {
       await syncContactToBrevo({
         name: name.trim(),
