@@ -1,5 +1,4 @@
 import { sendQuoteNotification, sendContactConfirmation } from './_lib/emailService.js';
-import { syncContactToBrevo } from './_lib/brevoService.js';
 
 export const config = {
   api: { bodyParser: false },
@@ -85,21 +84,6 @@ export default async function handler(req, res) {
       files,
     });
     await sendContactConfirmation(email.trim(), name.trim());
-
-    // Sync to Brevo
-    try {
-      await syncContactToBrevo({
-        name: name.trim(),
-        email: email.trim(),
-        phone: phone || '',
-        company: company || '',
-        service,
-        source: 'quote_form',
-        optInMarketing: optInMarketing !== 'false',
-      });
-    } catch (brevoErr) {
-      console.error('[Brevo] Sync error (non-fatal):', brevoErr);
-    }
 
     res.json({ success: true, message: 'Your quote request has been submitted. We will be in touch shortly!' });
   } catch (err) {
