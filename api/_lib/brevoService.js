@@ -26,7 +26,7 @@ export async function syncContactToBrevo({ name, email, phone, company, service,
       SOURCE: source || 'website',
       OPT_IN_MARKETING: optInMarketing ? 'true' : 'false',
     },
-    listIds: optInMarketing ? [2] : [3],
+    listIds: optInMarketing ? [3] : [4],
     updateEnabled: true,
   };
 
