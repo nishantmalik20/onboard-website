@@ -75,16 +75,20 @@ export default async function handler(req, res) {
     });
     await sendContactConfirmation(email.trim(), name.trim());
 
-    // Sync to Brevo (non-blocking)
-    syncContactToBrevo({
-      name: name.trim(),
-      email: email.trim(),
-      phone: phone || '',
-      company: company || '',
-      service,
-      source: 'quote_form',
-      optInMarketing: optInMarketing !== 'false',
-    }).catch((err) => console.error('[Brevo] Background sync error:', err));
+    // Sync to Brevo (await so Vercel doesn't kill the function before it completes)
+    try {
+      await syncContactToBrevo({
+        name: name.trim(),
+        email: email.trim(),
+        phone: phone || '',
+        company: company || '',
+        service,
+        source: 'quote_form',
+        optInMarketing: optInMarketing !== 'false',
+      });
+    } catch (brevoErr) {
+      console.error('[Brevo] Sync error (non-fatal):', brevoErr);
+    }
 
     res.json({ success: true, message: 'Your quote request has been submitted. We will be in touch shortly!' });
   } catch (err) {
