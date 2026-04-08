@@ -17,6 +17,7 @@ export default function ContactForm() {
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
   const [errors, setErrors] = useState({});
+  const [optInMarketing, setOptInMarketing] = useState(true);
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -64,7 +65,7 @@ export default function ContactForm() {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, optInMarketing }),
         signal: controller.signal,
       });
       clearTimeout(timeout);
@@ -173,7 +174,19 @@ export default function ContactForm() {
           {errors.message && <p className="font-heading text-xs mt-1 pl-4" style={{ color: '#E63B2E' }}>{errors.message}</p>}
         </div>
 
-        <div className="mt-2">
+        <label className="flex items-start gap-3 cursor-pointer mt-2">
+          <input
+            type="checkbox"
+            checked={optInMarketing}
+            onChange={(e) => setOptInMarketing(e.target.checked)}
+            className="mt-1 w-4 h-4 accent-accent flex-shrink-0"
+          />
+          <span className="font-heading text-xs leading-relaxed" style={{ color: '#E8E4DDaa' }}>
+            I'd like to receive optional promotional offers from OnBoard Print & Signs.
+          </span>
+        </label>
+
+        <div className="mt-4">
           <button
             type="submit"
             disabled={loading}

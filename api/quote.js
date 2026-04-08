@@ -1,6 +1,7 @@
 import multer from 'multer';
 import path from 'path';
 import { sendQuoteNotification, sendContactConfirmation } from './_lib/emailService.js';
+import { syncContactToBrevo } from './_lib/brevoService.js';
 
 export const config = {
   api: { bodyParser: false },
@@ -41,7 +42,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ success: false, error: err.message });
   }
 
-  const { name, email, phone, company, service, description, quantity, deadline, budget } = req.body;
+  const { name, email, phone, company, service, description, quantity, deadline, budget, optInMarketing } = req.body;
 
   const errors = [];
   if (!name || name.trim().length < 2) errors.push('Name must be at least 2 characters.');
@@ -73,6 +74,17 @@ export default async function handler(req, res) {
       files,
     });
     await sendContactConfirmation(email.trim(), name.trim());
+
+    // Sync to Brevo (non-blocking)
+    syncContactToBrevo({
+      name: name.trim(),
+      email: email.trim(),
+      phone: phone || '',
+      company: company || '',
+      service,
+      source: 'quote_form',
+      optInMarketing: optInMarketing !== 'false',
+    }).catch((err) => console.error('[Brevo] Background sync error:', err));
 
     res.json({ success: true, message: 'Your quote request has been submitted. We will be in touch shortly!' });
   } catch (err) {

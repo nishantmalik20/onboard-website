@@ -1,11 +1,12 @@
 import { sendContactNotification, sendContactConfirmation } from './_lib/emailService.js';
+import { syncContactToBrevo } from './_lib/brevoService.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name, email, phone, message } = req.body;
+  const { name, email, phone, message, optInMarketing } = req.body;
 
   // Validation
   const errors = [];
@@ -25,6 +26,15 @@ export default async function handler(req, res) {
       message: message.trim(),
     });
     await sendContactConfirmation(email.trim(), name.trim());
+
+    // Sync to Brevo (non-blocking — don't fail the form if Brevo is down)
+    syncContactToBrevo({
+      name: name.trim(),
+      email: email.trim(),
+      phone: phone || '',
+      source: 'contact_form',
+      optInMarketing: optInMarketing !== false,
+    }).catch((err) => console.error('[Brevo] Background sync error:', err));
 
     res.json({ success: true, message: 'Your message has been sent. We will get back to you soon!' });
   } catch (err) {

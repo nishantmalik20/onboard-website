@@ -42,6 +42,7 @@ export default function QuoteForm({ preselectedService = '' }) {
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
   const [files, setFiles] = useState([]);
+  const [optInMarketing, setOptInMarketing] = useState(true);
   const [errors, setErrors] = useState({});
   const [form, setForm] = useState({
     name: '',
@@ -100,6 +101,7 @@ export default function QuoteForm({ preselectedService = '' }) {
     try {
       const formData = new FormData();
       Object.entries(form).forEach(([k, v]) => formData.append(k, v));
+      formData.append('optInMarketing', optInMarketing);
       files.forEach((file) => formData.append('files', file));
 
       const res = await fetch('/api/quote', { method: 'POST', body: formData });
@@ -299,8 +301,21 @@ export default function QuoteForm({ preselectedService = '' }) {
           <FileUpload files={files} onChange={setFiles} />
         </div>
 
+        {/* Marketing opt-in */}
+        <label className="flex items-start gap-3 cursor-pointer mt-6">
+          <input
+            type="checkbox"
+            checked={optInMarketing}
+            onChange={(e) => setOptInMarketing(e.target.checked)}
+            className="mt-1 w-4 h-4 accent-accent flex-shrink-0"
+          />
+          <span className="font-heading text-xs leading-relaxed" style={{ color: '#E8E4DDaa' }}>
+            I'd like to receive optional promotional offers from OnBoard Print & Signs.
+          </span>
+        </label>
+
         {/* Submit */}
-        <div className="mt-8">
+        <div className="mt-6">
           <button
             type="submit"
             disabled={loading}
