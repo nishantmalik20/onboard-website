@@ -112,19 +112,21 @@ export default function QuoteForm({ preselectedService = '' }) {
       }
 
       // Sync to Brevo via separate JSON endpoint
-      fetch('/api/brevo-sync', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          phone: form.phone,
-          company: form.company,
-          service: form.service,
-          source: 'quote_form',
-          optInMarketing,
-        }),
-      }).catch(() => {});
+      try {
+        await fetch('/api/brevo-sync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            phone: form.phone,
+            company: form.company,
+            service: form.service,
+            source: 'quote_form',
+            optInMarketing,
+          }),
+        });
+      } catch (_) {}
 
       setToast({ type: 'success', message: 'Quote request submitted! We will be in touch within 2 hours.' });
       setForm({ name: '', email: '', phone: '', company: '', service: '', description: '', quantity: '', deadline: '', budget: '' });
