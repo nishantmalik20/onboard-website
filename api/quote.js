@@ -1,4 +1,5 @@
 import { sendQuoteNotification, sendContactConfirmation } from './_lib/emailService.js';
+import { persistQuoteSubmission } from './_lib/quoteStorage.js';
 
 export const config = {
   api: { bodyParser: false },
@@ -94,11 +95,11 @@ export default async function handler(req, res) {
     const parsed = await parseMultipart(req);
     fields = parsed.fields;
     files = parsed.files;
-  } catch (err) {
+  } catch {
     return res.status(400).json({ success: false, error: 'Failed to parse form data.' });
   }
 
-  const { name, email, phone, company, service, description, quantity, deadline, budget, optInMarketing } = fields;
+  const { name, email, phone, company, service, description, quantity, deadline, budget } = fields;
 
   const errors = [];
   if (!name || name.trim().length < 2) errors.push('Name must be at least 2 characters.');
@@ -108,6 +109,17 @@ export default async function handler(req, res) {
 
   if (errors.length > 0) {
     return res.status(400).json({ success: false, error: errors.join(' ') });
+  }
+
+  // Preferred path: save the lead + files to Supabase (creates an Opportunity
+  // task, stores files permanently, returns signed links). If anything goes
+  // wrong we fall back to emailing the raw attachments so nothing is ever lost.
+  let attachmentLinks = null;
+  try {
+    const result = await persistQuoteSubmission(fields, files);
+    attachmentLinks = result.links;
+  } catch (err) {
+    console.error('[quote] Supabase persistence failed; falling back to email attachments:', err.message);
   }
 
   try {
@@ -122,6 +134,7 @@ export default async function handler(req, res) {
       deadline: deadline || '',
       budget: budget || '',
       files,
+      attachmentLinks,
     });
     await sendContactConfirmation(email.trim(), name.trim());
 

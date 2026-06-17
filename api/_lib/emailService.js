@@ -58,13 +58,31 @@ export async function sendContactNotification({ name, email, phone, message }) {
 }
 
 export async function sendQuoteNotification(quoteData) {
-  const { name, email, phone, company, serviceType, description, quantity, deadline, budget, files } = quoteData;
+  const { name, email, phone, company, serviceType, description, quantity, deadline, budget, files, attachmentLinks } = quoteData;
 
-  const fileHtml = (files && files.length > 0)
-    ? `<h3>Uploaded Files</h3><ul>${files.map((f) => `<li>${f.name} (${(f.size / 1024).toFixed(1)} KB)</li>`).join('')}</ul>`
-    : '<p><em>No files uploaded.</em></p>';
+  // Preferred path: files live in Supabase Storage and we email signed links.
+  // Fallback path (storage unavailable): attach the raw file buffers as before.
+  const linksMode = Array.isArray(attachmentLinks);
 
-  const attachments = (files && files.length > 0)
+  const sizeKb = (bytes) => (bytes ? ` (${(bytes / 1024).toFixed(1)} KB)` : '');
+
+  let fileHtml;
+  let fileText = '';
+  if (linksMode) {
+    fileHtml = attachmentLinks.length > 0
+      ? `<h3>Uploaded Files</h3><ul>${attachmentLinks.map((f) => `<li><a href="${f.url}">${f.name}</a>${sizeKb(f.size)}</li>`).join('')}</ul>`
+        + '<p style="font-size:12px;color:#888;">Links expire in 7 days — the files are stored permanently and viewable in the admin panel.</p>'
+      : '<p><em>No files uploaded.</em></p>';
+    fileText = attachmentLinks.length > 0
+      ? `\n\nUploaded Files:\n${attachmentLinks.map((f) => `- ${f.name}: ${f.url}`).join('\n')}`
+      : '';
+  } else {
+    fileHtml = (files && files.length > 0)
+      ? `<h3>Uploaded Files</h3><ul>${files.map((f) => `<li>${f.name}${sizeKb(f.size)}</li>`).join('')}</ul>`
+      : '<p><em>No files uploaded.</em></p>';
+  }
+
+  const attachments = (!linksMode && files && files.length > 0)
     ? files.map((f) => ({ filename: f.name, content: f.buffer }))
     : [];
 
@@ -72,7 +90,7 @@ export async function sendQuoteNotification(quoteData) {
     from: `"OnBoard Website" <${getFromAddress()}>`,
     to: getNotificationEmail(),
     subject: `New Quote Request — ${serviceType} — from ${name}`,
-    text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone || 'Not provided'}\nCompany: ${company || 'Not provided'}\nService: ${serviceType}\nQuantity: ${quantity || 'Not specified'}\nDeadline: ${deadline || 'Not specified'}\nBudget: ${budget || 'Not specified'}\n\nDescription:\n${description}`,
+    text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone || 'Not provided'}\nCompany: ${company || 'Not provided'}\nService: ${serviceType}\nQuantity: ${quantity || 'Not specified'}\nDeadline: ${deadline || 'Not specified'}\nBudget: ${budget || 'Not specified'}\n\nDescription:\n${description}${fileText}`,
     html: `
       <h2>New Quote Request</h2>
       <table style="border-collapse:collapse;">
