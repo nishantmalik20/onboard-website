@@ -3,8 +3,20 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, CheckCircle, X } from 'lucide-react';
 import FileUpload from './FileUpload';
+import { supabasePublic } from '../../lib/supabasePublic';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Parse a response without throwing on non-JSON (e.g. a plain-text 413/500),
+// so the user sees a clean message instead of a JSON parse error.
+async function safeJson(res) {
+  const text = await res.text();
+  try {
+    return JSON.parse(text);
+  } catch {
+    return { error: text.trim().slice(0, 200) || 'Unexpected server response.' };
+  }
+}
 
 const SERVICE_OPTIONS = [
   'Signage',
@@ -99,13 +111,47 @@ export default function QuoteForm({ preselectedService = '' }) {
 
     setLoading(true);
     try {
-      const formData = new FormData();
-      Object.entries(form).forEach(([k, v]) => formData.append(k, v));
-      formData.append('optInMarketing', optInMarketing);
-      files.forEach((file) => formData.append('files', file));
+      // 1. Upload any files straight to Supabase Storage via signed URLs,
+      //    bypassing the serverless body-size limit entirely.
+      let uploadedFiles = [];
+      if (files.length > 0) {
+        const urlRes = await fetch('/api/quote-upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            files: files.map((f) => ({ name: f.name, size: f.size, contentType: f.type })),
+          }),
+        });
+        const urlData = await safeJson(urlRes);
+        if (!urlRes.ok || !Array.isArray(urlData.uploads)) {
+          throw new Error(urlData.error || 'Could not prepare file upload.');
+        }
 
-      const res = await fetch('/api/quote', { method: 'POST', body: formData });
-      const data = await res.json();
+        await Promise.all(urlData.uploads.map(async (u, i) => {
+          const file = files[i];
+          const { error } = await supabasePublic.storage
+            .from('quotes')
+            .uploadToSignedUrl(u.path, u.token, file, {
+              contentType: file.type || 'application/octet-stream',
+            });
+          if (error) throw new Error(`Upload failed for "${file.name}". Please try again.`);
+        }));
+
+        uploadedFiles = urlData.uploads.map((u, i) => ({
+          name: files[i].name,
+          path: u.path,
+          size: files[i].size,
+          contentType: files[i].type,
+        }));
+      }
+
+      // 2. Submit the lead as small JSON (no file bytes through the function).
+      const res = await fetch('/api/quote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, optInMarketing, uploadedFiles }),
+      });
+      const data = await safeJson(res);
 
       if (!res.ok || !data.success) {
         throw new Error(data.error || 'Server returned an error.');
@@ -126,7 +172,7 @@ export default function QuoteForm({ preselectedService = '' }) {
             optInMarketing,
           }),
         });
-      } catch (_) {}
+      } catch { /* Brevo sync is best-effort — never block the submission */ }
 
       setToast({ type: 'success', message: 'Quote request submitted! We will be in touch within 2 hours.' });
       setForm({ name: '', email: '', phone: '', company: '', service: '', description: '', quantity: '', deadline: '', budget: '' });

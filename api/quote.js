@@ -1,5 +1,5 @@
 import { sendQuoteNotification, sendContactConfirmation } from './_lib/emailService.js';
-import { persistQuoteSubmission } from './_lib/quoteStorage.js';
+import { persistQuoteSubmission, persistQuoteSubmissionFromPaths } from './_lib/quoteStorage.js';
 
 export const config = {
   api: { bodyParser: false },
@@ -85,18 +85,44 @@ function parseMultipart(req) {
   });
 }
 
+function readRawBody(req) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    req.on('data', (chunk) => chunks.push(chunk));
+    req.on('end', () => resolve(Buffer.concat(chunks)));
+    req.on('error', reject);
+  });
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  let fields, files;
-  try {
-    const parsed = await parseMultipart(req);
-    fields = parsed.fields;
-    files = parsed.files;
-  } catch {
-    return res.status(400).json({ success: false, error: 'Failed to parse form data.' });
+  const contentType = req.headers['content-type'] || '';
+  let fields = {};
+  let files = [];
+  let uploadedFiles = null; // null → multipart flow; array → direct-upload flow
+
+  if (contentType.includes('application/json')) {
+    // Preferred flow: files already uploaded to Storage; body is small JSON.
+    let body;
+    try {
+      body = JSON.parse((await readRawBody(req)).toString('utf8') || '{}');
+    } catch {
+      return res.status(400).json({ success: false, error: 'Invalid request format.' });
+    }
+    fields = body;
+    uploadedFiles = Array.isArray(body.uploadedFiles) ? body.uploadedFiles : [];
+  } else {
+    // Fallback: multipart upload through the function (≤ ~4.5 MB).
+    try {
+      const parsed = await parseMultipart(req);
+      fields = parsed.fields;
+      files = parsed.files;
+    } catch {
+      return res.status(400).json({ success: false, error: 'Failed to parse form data.' });
+    }
   }
 
   const { name, email, phone, company, service, description, quantity, deadline, budget } = fields;
@@ -111,15 +137,18 @@ export default async function handler(req, res) {
     return res.status(400).json({ success: false, error: errors.join(' ') });
   }
 
-  // Preferred path: save the lead + files to Supabase (creates an Opportunity
-  // task, stores files permanently, returns signed links). If anything goes
-  // wrong we fall back to emailing the raw attachments so nothing is ever lost.
+  // Save the lead + files to Supabase (creates an Opportunity task, records
+  // attachments, returns signed links). The direct-upload flow has its files
+  // already in Storage; the multipart fallback uploads the buffers here.
   let attachmentLinks = null;
   try {
-    const result = await persistQuoteSubmission(fields, files);
+    const result = uploadedFiles !== null
+      ? await persistQuoteSubmissionFromPaths(fields, uploadedFiles)
+      : await persistQuoteSubmission(fields, files);
     attachmentLinks = result.links;
   } catch (err) {
-    console.error('[quote] Supabase persistence failed; falling back to email attachments:', err.message);
+    console.error('[quote] Supabase persistence failed:', err.message);
+    // Multipart fallback can still email raw attachments; the JSON path can't.
   }
 
   try {
