@@ -4,41 +4,81 @@ export const config = {
   api: { bodyParser: false },
 };
 
+const DOUBLE_CRLF = Buffer.from('\r\n\r\n');
+
+/**
+ * Binary-safe multipart/form-data parser.
+ *
+ * The body must be parsed as raw bytes. Decoding the whole buffer with
+ * buffer.toString() (UTF-8) mangles any binary file — images, PDFs — into
+ * U+FFFD replacement characters, which is what was corrupting every uploaded
+ * attachment. Here we slice each file's bytes straight out of the Buffer and
+ * only decode the small header/field text as UTF-8.
+ */
+export function parseMultipartBuffer(buffer, contentType) {
+  const boundaryMatch = (contentType || '').match(/boundary=(?:"([^"]+)"|([^;]+))/i);
+  if (!boundaryMatch) throw new Error('No boundary found');
+  const boundary = (boundaryMatch[1] || boundaryMatch[2]).trim();
+  const delimiter = Buffer.from(`--${boundary}`);
+
+  const fields = {};
+  const files = [];
+
+  // Locate every boundary delimiter in the raw bytes.
+  const marks = [];
+  let at = buffer.indexOf(delimiter, 0);
+  while (at !== -1) {
+    marks.push(at);
+    at = buffer.indexOf(delimiter, at + delimiter.length);
+  }
+
+  // Each part lives between two consecutive delimiters; the final delimiter is
+  // the closing "--boundary--", so we stop one short.
+  for (let i = 0; i < marks.length - 1; i++) {
+    let part = buffer.subarray(marks[i] + delimiter.length, marks[i + 1]);
+
+    // Trim the CRLF after the delimiter line and the CRLF before the next one.
+    if (part[0] === 0x0d && part[1] === 0x0a) part = part.subarray(2);
+    if (part[part.length - 2] === 0x0d && part[part.length - 1] === 0x0a) {
+      part = part.subarray(0, part.length - 2);
+    }
+
+    const headerEnd = part.indexOf(DOUBLE_CRLF);
+    if (headerEnd === -1) continue;
+
+    const headers = part.subarray(0, headerEnd).toString('utf8');
+    const body = part.subarray(headerEnd + DOUBLE_CRLF.length);
+
+    const nameMatch = headers.match(/name="([^"]+)"/i);
+    if (!nameMatch) continue;
+    const filenameMatch = headers.match(/filename="([^"]*)"/i);
+
+    if (filenameMatch && filenameMatch[1]) {
+      const typeMatch = headers.match(/content-type:\s*([^\r\n]+)/i);
+      files.push({
+        name: filenameMatch[1],
+        contentType: typeMatch ? typeMatch[1].trim() : 'application/octet-stream',
+        size: body.length,
+        buffer: Buffer.from(body), // own copy of the exact bytes
+      });
+    } else {
+      fields[nameMatch[1]] = body.toString('utf8');
+    }
+  }
+
+  return { fields, files };
+}
+
 function parseMultipart(req) {
   return new Promise((resolve, reject) => {
     const chunks = [];
     req.on('data', (chunk) => chunks.push(chunk));
     req.on('end', () => {
-      const buffer = Buffer.concat(chunks);
-      const contentType = req.headers['content-type'] || '';
-      const boundaryMatch = contentType.match(/boundary=(.+)/);
-      if (!boundaryMatch) return reject(new Error('No boundary found'));
-
-      const boundary = boundaryMatch[1];
-      const parts = buffer.toString().split(`--${boundary}`).slice(1, -1);
-      const fields = {};
-      const files = [];
-
-      for (const part of parts) {
-        const [rawHeaders, ...bodyParts] = part.split('\r\n\r\n');
-        const body = bodyParts.join('\r\n\r\n').replace(/\r\n$/, '');
-        const nameMatch = rawHeaders.match(/name="([^"]+)"/);
-        const filenameMatch = rawHeaders.match(/filename="([^"]+)"/);
-
-        if (!nameMatch) continue;
-
-        if (filenameMatch && filenameMatch[1]) {
-          files.push({
-            name: filenameMatch[1],
-            size: Buffer.byteLength(body),
-            buffer: Buffer.from(body, 'binary'),
-          });
-        } else {
-          fields[nameMatch[1]] = body;
-        }
+      try {
+        resolve(parseMultipartBuffer(Buffer.concat(chunks), req.headers['content-type']));
+      } catch (err) {
+        reject(err);
       }
-
-      resolve({ fields, files });
     });
     req.on('error', reject);
   });
