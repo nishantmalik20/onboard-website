@@ -3,6 +3,8 @@
 
 User-agent: *
 Allow: /
+# Internal staff admin panel — never index
+Disallow: /admin
 
 # Explicitly allow AI search engine bots (GEO)
 User-agent: GPTBot
