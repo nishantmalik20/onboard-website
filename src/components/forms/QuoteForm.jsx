@@ -3,7 +3,6 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, CheckCircle, X } from 'lucide-react';
 import FileUpload from './FileUpload';
-import { supabasePublic } from '../../lib/supabasePublic';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,6 +15,23 @@ async function safeJson(res) {
   } catch {
     return { error: text.trim().slice(0, 200) || 'Unexpected server response.' };
   }
+}
+
+// PUT a file straight to a Supabase signed upload URL via XHR so we can report
+// real upload progress (the supabase-js client uses fetch, which can't).
+function putWithProgress(signedUrl, file, onProgress) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('PUT', signedUrl);
+    xhr.setRequestHeader('content-type', file.type || 'application/octet-stream');
+    xhr.setRequestHeader('x-upsert', 'false');
+    xhr.upload.onprogress = (e) => { if (e.lengthComputable) onProgress(e.loaded); };
+    xhr.onload = () => (xhr.status >= 200 && xhr.status < 300
+      ? resolve()
+      : reject(new Error(`Upload failed (${xhr.status})`)));
+    xhr.onerror = () => reject(new Error('Upload failed — network error'));
+    xhr.send(file);
+  });
 }
 
 const SERVICE_OPTIONS = [
@@ -52,6 +68,7 @@ const textareaStyle = {
 export default function QuoteForm({ preselectedService = '' }) {
   const formRef = useRef(null);
   const [loading, setLoading] = useState(false);
+  const [uploadPct, setUploadPct] = useState(null); // null when not uploading
   const [toast, setToast] = useState(null);
   const [files, setFiles] = useState([]);
   const [optInMarketing, setOptInMarketing] = useState(true);
@@ -127,15 +144,20 @@ export default function QuoteForm({ preselectedService = '' }) {
           throw new Error(urlData.error || 'Could not prepare file upload.');
         }
 
-        await Promise.all(urlData.uploads.map(async (u, i) => {
-          const file = files[i];
-          const { error } = await supabasePublic.storage
-            .from('quotes')
-            .uploadToSignedUrl(u.path, u.token, file, {
-              contentType: file.type || 'application/octet-stream',
-            });
-          if (error) throw new Error(`Upload failed for "${file.name}". Please try again.`);
-        }));
+        // Upload each file directly to Storage, reporting combined progress.
+        const totalBytes = files.reduce((s, f) => s + f.size, 0) || 1;
+        const loaded = new Array(files.length).fill(0);
+        setUploadPct(0);
+
+        await Promise.all(urlData.uploads.map((u, i) =>
+          putWithProgress(u.signedUrl, files[i], (bytes) => {
+            loaded[i] = bytes;
+            const sum = loaded.reduce((a, b) => a + b, 0);
+            setUploadPct(Math.min(99, Math.round((sum / totalBytes) * 100)));
+          }).catch(() => {
+            throw new Error(`Upload failed for "${files[i].name}". Please try again.`);
+          })));
+        setUploadPct(100);
 
         uploadedFiles = urlData.uploads.map((u, i) => ({
           name: files[i].name,
@@ -181,6 +203,7 @@ export default function QuoteForm({ preselectedService = '' }) {
       setToast({ type: 'error', message: err.message || 'Something went wrong. Please try again or call us directly.' });
     } finally {
       setLoading(false);
+      setUploadPct(null);
       setTimeout(() => setToast(null), 5000);
     }
   };
@@ -376,6 +399,29 @@ export default function QuoteForm({ preselectedService = '' }) {
             I'd like to receive optional promotional offers from OnBoard Print & Signs.
           </span>
         </label>
+
+        {/* Upload progress */}
+        {uploadPct !== null && (
+          <div className="mt-6" role="status" aria-live="polite">
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="font-heading text-xs" style={{ color: '#E8E4DDaa' }}>
+                {uploadPct < 100 ? 'Uploading files…' : 'Upload complete — submitting…'}
+              </span>
+              <span className="font-data text-xs" style={{ color: '#E63B2E' }}>{uploadPct}%</span>
+            </div>
+            <div style={{ height: 8, borderRadius: 9999, backgroundColor: '#1A1A1F', overflow: 'hidden' }}>
+              <div
+                style={{
+                  height: '100%',
+                  width: `${uploadPct}%`,
+                  backgroundColor: '#E63B2E',
+                  borderRadius: 9999,
+                  transition: 'width 0.25s ease',
+                }}
+              />
+            </div>
+          </div>
+        )}
 
         {/* Submit */}
         <div className="mt-6">

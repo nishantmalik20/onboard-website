@@ -1,7 +1,7 @@
 import { getAdminClient } from './_lib/supabaseAdmin.js';
 
 const MAX_FILES = 5;
-const MAX_SIZE = 25 * 1024 * 1024; // 25 MB
+const MAX_SIZE = 50 * 1024 * 1024; // 50 MB (matches the Supabase bucket limit)
 const ALLOWED = ['pdf', 'ai', 'psd', 'eps', 'svg', 'png', 'jpg', 'jpeg', 'tiff', 'tif'];
 
 function sanitize(name) {
@@ -47,7 +47,7 @@ export default async function handler(req, res) {
       console.error('[quote-upload] createSignedUploadUrl failed:', error.message);
       return res.status(500).json({ error: 'Could not prepare the upload. Please try again.' });
     }
-    uploads.push({ name: f.name, path, token: data.token });
+    uploads.push({ name: f.name, path, token: data.token, signedUrl: data.signedUrl });
   }
 
   return res.status(200).json({ uploads });

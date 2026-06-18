@@ -3,7 +3,7 @@ import { Upload, X, FileText } from 'lucide-react';
 
 const ACCEPTED_TYPES = '.pdf,.ai,.psd,.eps,.svg,.png,.jpg,.jpeg,.tiff,.tif';
 const MAX_FILES = 5;
-const MAX_SIZE = 25 * 1024 * 1024; // 25MB
+const MAX_SIZE = 50 * 1024 * 1024; // 50MB (matches the Supabase bucket limit)
 
 function formatSize(bytes) {
   if (bytes < 1024) return `${bytes} B`;
@@ -28,7 +28,7 @@ export default function FileUpload({ files, onChange }) {
     const validFiles = [];
     for (const file of fileList) {
       if (file.size > MAX_SIZE) {
-        setError(`"${file.name}" exceeds 25MB limit.`);
+        setError(`"${file.name}" exceeds the 50MB limit.`);
         return;
       }
       const ext = '.' + file.name.split('.').pop().toLowerCase();
@@ -71,7 +71,7 @@ export default function FileUpload({ files, onChange }) {
           <span style={{ color: '#E63B2E' }} className="font-semibold">Click to browse</span> or drag and drop files here
         </p>
         <p className="font-data text-xs mt-2" style={{ color: '#E8E4DD55' }}>
-          PDF, AI, PSD, EPS, SVG, PNG, JPG, TIFF — Max 25MB each, up to 5 files
+          PDF, AI, PSD, EPS, SVG, PNG, JPG, TIFF — Max 50MB each, up to 5 files
         </p>
         <input
           ref={inputRef}
