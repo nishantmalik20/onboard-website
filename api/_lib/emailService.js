@@ -29,6 +29,17 @@ function getTransporter() {
 const getNotificationEmail = () => process.env.NOTIFICATION_EMAIL || 'contact@onboardprints.ca';
 const getFromAddress = () => process.env.SMTP_USER || 'contact@onboardprints.ca';
 
+// Escape customer-supplied text before embedding it in notification email HTML,
+// so a malicious submission can't inject markup/phishing links into staff mail.
+function esc(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 async function send(mailOptions) {
   const transporter = getTransporter();
   if (!transporter) {
@@ -47,12 +58,12 @@ export async function sendContactNotification({ name, email, phone, message }) {
     html: `
       <h2>New Contact Form Submission</h2>
       <table style="border-collapse:collapse;">
-        <tr><td style="padding:4px 12px;font-weight:bold;">Name</td><td style="padding:4px 12px;">${name}</td></tr>
-        <tr><td style="padding:4px 12px;font-weight:bold;">Email</td><td style="padding:4px 12px;"><a href="mailto:${email}">${email}</a></td></tr>
-        <tr><td style="padding:4px 12px;font-weight:bold;">Phone</td><td style="padding:4px 12px;">${phone || 'Not provided'}</td></tr>
+        <tr><td style="padding:4px 12px;font-weight:bold;">Name</td><td style="padding:4px 12px;">${esc(name)}</td></tr>
+        <tr><td style="padding:4px 12px;font-weight:bold;">Email</td><td style="padding:4px 12px;"><a href="mailto:${esc(email)}">${esc(email)}</a></td></tr>
+        <tr><td style="padding:4px 12px;font-weight:bold;">Phone</td><td style="padding:4px 12px;">${esc(phone) || 'Not provided'}</td></tr>
       </table>
       <h3>Message</h3>
-      <p>${message.replace(/\n/g, '<br>')}</p>
+      <p>${esc(message).replace(/\n/g, '<br>')}</p>
     `,
   });
 }
@@ -70,7 +81,7 @@ export async function sendQuoteNotification(quoteData) {
   let fileText = '';
   if (linksMode) {
     fileHtml = attachmentLinks.length > 0
-      ? `<h3>Uploaded Files</h3><ul>${attachmentLinks.map((f) => `<li><a href="${f.url}">${f.name}</a>${sizeKb(f.size)}</li>`).join('')}</ul>`
+      ? `<h3>Uploaded Files</h3><ul>${attachmentLinks.map((f) => `<li><a href="${f.url}">${esc(f.name)}</a>${sizeKb(f.size)}</li>`).join('')}</ul>`
         + '<p style="font-size:12px;color:#888;">Links expire in 7 days — the files are stored permanently and viewable in the admin panel.</p>'
       : '<p><em>No files uploaded.</em></p>';
     fileText = attachmentLinks.length > 0
@@ -78,7 +89,7 @@ export async function sendQuoteNotification(quoteData) {
       : '';
   } else {
     fileHtml = (files && files.length > 0)
-      ? `<h3>Uploaded Files</h3><ul>${files.map((f) => `<li>${f.name}${sizeKb(f.size)}</li>`).join('')}</ul>`
+      ? `<h3>Uploaded Files</h3><ul>${files.map((f) => `<li>${esc(f.name)}${sizeKb(f.size)}</li>`).join('')}</ul>`
       : '<p><em>No files uploaded.</em></p>';
   }
 
@@ -94,17 +105,17 @@ export async function sendQuoteNotification(quoteData) {
     html: `
       <h2>New Quote Request</h2>
       <table style="border-collapse:collapse;">
-        <tr><td style="padding:4px 12px;font-weight:bold;">Name</td><td style="padding:4px 12px;">${name}</td></tr>
-        <tr><td style="padding:4px 12px;font-weight:bold;">Email</td><td style="padding:4px 12px;"><a href="mailto:${email}">${email}</a></td></tr>
-        <tr><td style="padding:4px 12px;font-weight:bold;">Phone</td><td style="padding:4px 12px;">${phone || 'Not provided'}</td></tr>
-        <tr><td style="padding:4px 12px;font-weight:bold;">Company</td><td style="padding:4px 12px;">${company || 'Not provided'}</td></tr>
-        <tr><td style="padding:4px 12px;font-weight:bold;">Service</td><td style="padding:4px 12px;">${serviceType}</td></tr>
-        <tr><td style="padding:4px 12px;font-weight:bold;">Quantity</td><td style="padding:4px 12px;">${quantity || 'Not specified'}</td></tr>
-        <tr><td style="padding:4px 12px;font-weight:bold;">Deadline</td><td style="padding:4px 12px;">${deadline || 'Not specified'}</td></tr>
-        <tr><td style="padding:4px 12px;font-weight:bold;">Budget</td><td style="padding:4px 12px;">${budget || 'Not specified'}</td></tr>
+        <tr><td style="padding:4px 12px;font-weight:bold;">Name</td><td style="padding:4px 12px;">${esc(name)}</td></tr>
+        <tr><td style="padding:4px 12px;font-weight:bold;">Email</td><td style="padding:4px 12px;"><a href="mailto:${esc(email)}">${esc(email)}</a></td></tr>
+        <tr><td style="padding:4px 12px;font-weight:bold;">Phone</td><td style="padding:4px 12px;">${esc(phone) || 'Not provided'}</td></tr>
+        <tr><td style="padding:4px 12px;font-weight:bold;">Company</td><td style="padding:4px 12px;">${esc(company) || 'Not provided'}</td></tr>
+        <tr><td style="padding:4px 12px;font-weight:bold;">Service</td><td style="padding:4px 12px;">${esc(serviceType)}</td></tr>
+        <tr><td style="padding:4px 12px;font-weight:bold;">Quantity</td><td style="padding:4px 12px;">${esc(quantity) || 'Not specified'}</td></tr>
+        <tr><td style="padding:4px 12px;font-weight:bold;">Deadline</td><td style="padding:4px 12px;">${esc(deadline) || 'Not specified'}</td></tr>
+        <tr><td style="padding:4px 12px;font-weight:bold;">Budget</td><td style="padding:4px 12px;">${esc(budget) || 'Not specified'}</td></tr>
       </table>
       <h3>Description</h3>
-      <p>${description.replace(/\n/g, '<br>')}</p>
+      <p>${esc(description).replace(/\n/g, '<br>')}</p>
       ${fileHtml}
     `,
     attachments,
@@ -118,7 +129,7 @@ export async function sendContactConfirmation(email, name) {
     subject: 'We received your message — OnBoard Print & Signs',
     text: `Hi ${name},\n\nThank you for reaching out to OnBoard Print & Signs!\nWe have received your message and will get back to you within 1-2 business days.\n\nIf your request is urgent, feel free to call us directly.\n\nBest regards,\nOnBoard Print & Signs Team`,
     html: `
-      <p>Hi ${name},</p>
+      <p>Hi ${esc(name)},</p>
       <p>Thank you for reaching out to <strong>OnBoard Print &amp; Signs</strong>!</p>
       <p>We have received your message and will get back to you within 1–2 business days.</p>
       <p>If your request is urgent, feel free to call us directly.</p>
