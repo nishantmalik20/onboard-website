@@ -360,7 +360,7 @@ export const supabaseProvider = {
     return out;
   },
 
-  /** Admin only (RLS): upload a file to the task and record it. */
+  /** Admin or assigned employee (RLS): upload a file to the task and record it. */
   async addAttachment(taskId, file) {
     const safe = String(file.name || 'file').replace(/[^\w.-]+/g, '_').slice(0, 120) || 'file';
     const path = `${taskId}/${crypto.randomUUID()}-${safe}`;

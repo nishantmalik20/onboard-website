@@ -258,22 +258,20 @@ export function TaskDrawer({ mode, task, columns, users, isAdmin, defaultColumnI
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className={labelCls}>Images &amp; files</span>
-                {isAdmin && (
-                  <button
-                    type="button"
-                    onClick={() => fileInputRef.current?.click()}
-                    disabled={uploading}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-primary bg-white text-dark/70 hover:text-accent hover:border-accent/40 transition-colors font-heading text-xs font-semibold disabled:opacity-60"
-                  >
-                    {uploading ? <Loader2 size={14} className="animate-spin" /> : <ImagePlus size={14} />}
-                    {uploading ? 'Uploading…' : 'Add image'}
-                  </button>
-                )}
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={uploading}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-primary bg-white text-dark/70 hover:text-accent hover:border-accent/40 transition-colors font-heading text-xs font-semibold disabled:opacity-60"
+                >
+                  {uploading ? <Loader2 size={14} className="animate-spin" /> : <ImagePlus size={14} />}
+                  {uploading ? 'Uploading…' : 'Add image'}
+                </button>
               </div>
               <input ref={fileInputRef} type="file" accept="image/*,.pdf" multiple className="hidden" onChange={handleAddFiles} />
               {attachments.length === 0 ? (
                 <p className="font-data text-xs text-dark/40">
-                  {isAdmin ? 'No images yet — add a reference picture for the team.' : 'No images attached.'}
+                  No images yet — add a reference picture for the job.
                 </p>
               ) : (
                 <div className="grid grid-cols-3 gap-2">
