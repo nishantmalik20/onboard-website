@@ -6,6 +6,7 @@ import { getAdminClient } from './supabaseAdmin.js';
 // expiry — files are kept as long as storage allows.
 const SOFT_LIMIT_BYTES = (Number(process.env.STORAGE_SOFT_LIMIT_MB) || 800) * 1024 * 1024;
 const ORPHAN_AGE_MS = 24 * 60 * 60 * 1000;
+const COMPLETED_RETENTION_DAYS = Number(process.env.COMPLETED_RETENTION_DAYS) || 45;
 
 /** List every object in the quotes bucket (one level of {uuid}/ prefixes). */
 async function listAllObjects(admin) {
@@ -24,7 +25,25 @@ async function listAllObjects(admin) {
 
 export async function runStorageCleanup(nowMs) {
   const admin = getAdminClient();
-  const result = { orphansRemoved: 0, capacityRemoved: 0, usedMB: 0, limitMB: Math.round(SOFT_LIMIT_BYTES / 1048576) };
+  const result = { completedPurged: 0, orphansRemoved: 0, capacityRemoved: 0, usedMB: 0, limitMB: Math.round(SOFT_LIMIT_BYTES / 1048576) };
+
+  // 0. Purge jobs that have sat in the Completed stage past the retention window
+  //    (deletes the task + its files; attachment rows cascade with the task).
+  const { data: completedCol } = await admin.from('board_columns').select('id').eq('is_completed', true).maybeSingle();
+  if (completedCol) {
+    const cutoff = new Date(nowMs - COMPLETED_RETENTION_DAYS * 86400000).toISOString();
+    const { data: stale } = await admin
+      .from('tasks')
+      .select('id')
+      .eq('column_id', completedCol.id)
+      .lt('updated_at', cutoff);
+    for (const t of stale || []) {
+      const { data: files } = await admin.storage.from('quotes').list(t.id, { limit: 1000 });
+      if (files?.length) await admin.storage.from('quotes').remove(files.map((f) => `${t.id}/${f.name}`));
+      await admin.from('tasks').delete().eq('id', t.id);
+      result.completedPurged += 1;
+    }
+  }
 
   // 1. Remove abandoned uploads: storage objects with no attachment row, > 24h old.
   const objects = await listAllObjects(admin);

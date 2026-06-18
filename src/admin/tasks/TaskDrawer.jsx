@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { X, Trash2, Check, Loader2 } from 'lucide-react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { X, Trash2, Check, Loader2, ImagePlus, FileText, CheckCircle2 } from 'lucide-react';
 import { useData } from '../lib/useData.js';
 import { Avatar } from '../ui/Avatar.jsx';
 
@@ -38,6 +38,64 @@ export function TaskDrawer({ mode, task, columns, users, isAdmin, defaultColumnI
   const [form, setForm] = useState(() => initialForm(mode, task, defaultColumnId, columns));
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+
+  // Attachments / images (only on an existing task).
+  const fileInputRef = useRef(null);
+  const [attachments, setAttachments] = useState([]);
+  const [uploading, setUploading] = useState(false);
+  const completedColumn = columns.find((c) => c.isCompleted);
+  const isCompleted = task && completedColumn && task.columnId === completedColumn.id;
+
+  const loadAttachments = useCallback(async () => {
+    if (mode !== 'edit' || !task?.id) return;
+    try {
+      setAttachments(await data.listAttachments(task.id));
+    } catch {
+      setAttachments([]);
+    }
+  }, [data, mode, task]);
+
+  useEffect(() => { loadAttachments(); }, [loadAttachments]);
+
+  async function handleAddFiles(e) {
+    const picked = Array.from(e.target.files || []);
+    e.target.value = ''; // allow re-picking the same file
+    if (!picked.length) return;
+    setError('');
+    setUploading(true);
+    try {
+      for (const file of picked) {
+        await data.addAttachment(task.id, file);
+      }
+      await loadAttachments();
+    } catch (err) {
+      setError(err?.message || 'Could not upload the image');
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  async function handleRemoveAttachment(id) {
+    try {
+      await data.removeAttachment(id);
+      setAttachments((list) => list.filter((a) => a.id !== id));
+    } catch (err) {
+      setError(err?.message || 'Could not remove the file');
+    }
+  }
+
+  async function handleMarkComplete() {
+    if (!completedColumn || !task?.id) return;
+    setSaving(true);
+    try {
+      await data.moveTask(task.id, completedColumn.id, Number.MAX_SAFE_INTEGER);
+      await onSaved?.();
+      onClose();
+    } catch (err) {
+      setError(err?.message || 'Could not mark complete');
+      setSaving(false);
+    }
+  }
 
   const set = (patch) => setForm((f) => ({ ...f, ...patch }));
   const toggleAssignee = (id) =>
@@ -194,6 +252,59 @@ export function TaskDrawer({ mode, task, columns, users, isAdmin, defaultColumnI
               </div>
             )}
           </div>
+
+          {/* Images & files — only on an existing task */}
+          {mode === 'edit' && task?.id && (
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className={labelCls}>Images &amp; files</span>
+                {isAdmin && (
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={uploading}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-primary bg-white text-dark/70 hover:text-accent hover:border-accent/40 transition-colors font-heading text-xs font-semibold disabled:opacity-60"
+                  >
+                    {uploading ? <Loader2 size={14} className="animate-spin" /> : <ImagePlus size={14} />}
+                    {uploading ? 'Uploading…' : 'Add image'}
+                  </button>
+                )}
+              </div>
+              <input ref={fileInputRef} type="file" accept="image/*,.pdf" multiple className="hidden" onChange={handleAddFiles} />
+              {attachments.length === 0 ? (
+                <p className="font-data text-xs text-dark/40">
+                  {isAdmin ? 'No images yet — add a reference picture for the team.' : 'No images attached.'}
+                </p>
+              ) : (
+                <div className="grid grid-cols-3 gap-2">
+                  {attachments.map((a) => (
+                    <div key={a.id} className="relative group rounded-xl overflow-hidden border border-primary bg-white">
+                      {a.isImage && a.url ? (
+                        <a href={a.url} target="_blank" rel="noreferrer">
+                          <img src={a.url} alt={a.name} className="w-full h-24 object-cover" />
+                        </a>
+                      ) : (
+                        <a href={a.url || '#'} target="_blank" rel="noreferrer" className="flex flex-col items-center justify-center h-24 p-2 text-dark/60">
+                          <FileText size={22} />
+                          <span className="font-data text-[10px] mt-1 w-full text-center truncate">{a.name}</span>
+                        </a>
+                      )}
+                      {isAdmin && (
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveAttachment(a.id)}
+                          className="absolute top-1 right-1 w-6 h-6 inline-flex items-center justify-center rounded-full bg-dark/60 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                          aria-label={`Remove ${a.name}`}
+                        >
+                          <X size={13} />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </form>
 
         {/* Footer actions */}
@@ -202,6 +313,16 @@ export function TaskDrawer({ mode, task, columns, users, isAdmin, defaultColumnI
             <button type="button" onClick={handleDelete} disabled={saving} className="p-2.5 rounded-xl text-dark/50 hover:text-accent hover:bg-accent/10 transition-colors" aria-label="Delete task">
               <Trash2 size={18} />
             </button>
+          )}
+          {mode === 'edit' && completedColumn && !isCompleted && (
+            <button type="button" onClick={handleMarkComplete} disabled={saving} className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl border border-emerald-300 text-emerald-700 hover:bg-emerald-50 transition-colors font-heading text-sm font-semibold disabled:opacity-60">
+              <CheckCircle2 size={16} /> Mark complete
+            </button>
+          )}
+          {mode === 'edit' && isCompleted && (
+            <span className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-50 text-emerald-700 font-heading text-sm font-semibold">
+              <CheckCircle2 size={16} /> Completed
+            </span>
           )}
           <button type="button" onClick={onClose} className="ml-auto px-4 py-2.5 rounded-xl font-heading text-sm font-semibold text-dark/70 hover:bg-primary/50 transition-colors">
             Cancel

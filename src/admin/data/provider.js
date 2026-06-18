@@ -23,6 +23,16 @@
  * @property {string} [hint]
  * @property {number} position
  * @property {boolean} isDefault
+ * @property {boolean} [isCompleted]  // terminal "Completed" stage
+ *
+ * @typedef {Object} Attachment
+ * @property {string} id
+ * @property {string} name
+ * @property {string} path
+ * @property {number} size
+ * @property {string} contentType
+ * @property {string|null} url      // short-lived signed view URL
+ * @property {boolean} isImage
  *
  * @typedef {Object} Task
  * @property {string} id
@@ -66,6 +76,11 @@
  *   moveTask(id, toColumnId, toIndex): Promise<void>
  *   setAssignees(id, userIds): Promise<Task> // admin only
  *   deleteTask(id): Promise<void>            // admin only
+ *
+ *   // attachments / task images
+ *   listAttachments(taskId): Promise<Attachment[]>   // admin: all; employee: own tasks
+ *   addAttachment(taskId, file): Promise<Attachment> // admin only
+ *   removeAttachment(attachmentId): Promise<void>    // admin only
  */
 
 export class ProviderError extends Error {

@@ -344,6 +344,17 @@ export const mockProvider = {
     return ok();
   },
 
+  // ── attachments (no file handling in the mock) ──────────────────
+  async listAttachments() {
+    return ok([]);
+  },
+  async addAttachment() {
+    throw new ProviderError('Attachments need the live backend', 'forbidden');
+  },
+  async removeAttachment() {
+    return ok();
+  },
+
   /** Test/demo helper: wipe local state back to the seed. */
   async resetDemo() {
     localStorage.removeItem(DB_KEY);

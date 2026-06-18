@@ -42,6 +42,19 @@ function mapColumn(row) {
     hint: HINTS[row.name] || '',
     position: row.position,
     isDefault: row.is_default,
+    isCompleted: row.is_completed || false,
+  };
+}
+
+function mapAttachment(row, url) {
+  return {
+    id: row.id,
+    name: row.file_name,
+    path: row.file_path,
+    size: row.size_bytes,
+    contentType: row.content_type,
+    url,
+    isImage: (row.content_type || '').startsWith('image/'),
   };
 }
 
@@ -327,6 +340,50 @@ export const supabaseProvider = {
 
   async deleteTask(id) {
     const { error } = await supabase.from('tasks').delete().eq('id', id);
+    if (error) fail(error, 'forbidden');
+  },
+
+  // ── attachments / images ────────────────────────────────────────
+  /** Files on a task, each with a fresh 1-hour signed view URL. */
+  async listAttachments(taskId) {
+    const { data, error } = await supabase
+      .from('quote_attachments')
+      .select('id, file_name, file_path, content_type, size_bytes')
+      .eq('task_id', taskId)
+      .order('created_at');
+    if (error) return [];
+    const out = [];
+    for (const row of data) {
+      const { data: signed } = await supabase.storage.from('quotes').createSignedUrl(row.file_path, 60 * 60);
+      out.push(mapAttachment(row, signed?.signedUrl || null));
+    }
+    return out;
+  },
+
+  /** Admin only (RLS): upload a file to the task and record it. */
+  async addAttachment(taskId, file) {
+    const safe = String(file.name || 'file').replace(/[^\w.-]+/g, '_').slice(0, 120) || 'file';
+    const path = `${taskId}/${crypto.randomUUID()}-${safe}`;
+    const { error: upErr } = await supabase.storage.from('quotes').upload(path, file, {
+      contentType: file.type || 'application/octet-stream',
+      upsert: false,
+    });
+    if (upErr) fail(upErr, 'forbidden');
+    const { data, error } = await supabase
+      .from('quote_attachments')
+      .insert({ task_id: taskId, file_name: file.name, file_path: path, content_type: file.type || null, size_bytes: file.size ?? null })
+      .select('id, file_name, file_path, content_type, size_bytes')
+      .single();
+    if (error) fail(error, 'forbidden');
+    const { data: signed } = await supabase.storage.from('quotes').createSignedUrl(path, 60 * 60);
+    return mapAttachment(data, signed?.signedUrl || null);
+  },
+
+  /** Admin only (RLS): delete a file from a task. */
+  async removeAttachment(attachmentId) {
+    const { data: row } = await supabase.from('quote_attachments').select('file_path').eq('id', attachmentId).maybeSingle();
+    if (row?.file_path) await supabase.storage.from('quotes').remove([row.file_path]);
+    const { error } = await supabase.from('quote_attachments').delete().eq('id', attachmentId);
     if (error) fail(error, 'forbidden');
   },
 
