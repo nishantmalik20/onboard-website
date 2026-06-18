@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, CheckCircle, X } from 'lucide-react';
 import FileUpload from './FileUpload';
+import { Captcha, captchaEnabled } from './Captcha';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -67,6 +68,8 @@ const textareaStyle = {
 
 export default function QuoteForm({ preselectedService = '' }) {
   const formRef = useRef(null);
+  const captchaRef = useRef(null);
+  const [captchaToken, setCaptchaToken] = useState('');
   const [loading, setLoading] = useState(false);
   const [uploadPct, setUploadPct] = useState(null); // null when not uploading
   const [toast, setToast] = useState(null);
@@ -125,6 +128,11 @@ export default function QuoteForm({ preselectedService = '' }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
+    if (captchaEnabled && !captchaToken) {
+      setToast({ type: 'error', message: 'Please complete the “I am human” check.' });
+      setTimeout(() => setToast(null), 5000);
+      return;
+    }
 
     setLoading(true);
     try {
@@ -171,7 +179,7 @@ export default function QuoteForm({ preselectedService = '' }) {
       const res = await fetch('/api/quote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, optInMarketing, uploadedFiles }),
+        body: JSON.stringify({ ...form, optInMarketing, uploadedFiles, hcaptchaToken: captchaToken }),
       });
       const data = await safeJson(res);
 
@@ -204,6 +212,8 @@ export default function QuoteForm({ preselectedService = '' }) {
     } finally {
       setLoading(false);
       setUploadPct(null);
+      captchaRef.current?.resetCaptcha();
+      setCaptchaToken('');
       setTimeout(() => setToast(null), 5000);
     }
   };
@@ -399,6 +409,8 @@ export default function QuoteForm({ preselectedService = '' }) {
             I'd like to receive optional promotional offers from OnBoard Print & Signs.
           </span>
         </label>
+
+        <Captcha ref={captchaRef} onVerify={setCaptchaToken} onExpire={() => setCaptchaToken('')} />
 
         {/* Upload progress */}
         {uploadPct !== null && (

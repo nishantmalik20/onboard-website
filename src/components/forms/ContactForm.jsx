@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, CheckCircle, X } from 'lucide-react';
+import { Captcha, captchaEnabled } from './Captcha';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,6 +15,8 @@ const inputStyle = {
 
 export default function ContactForm() {
   const formRef = useRef(null);
+  const captchaRef = useRef(null);
+  const [captchaToken, setCaptchaToken] = useState('');
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
   const [errors, setErrors] = useState({});
@@ -57,6 +60,11 @@ export default function ContactForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
+    if (captchaEnabled && !captchaToken) {
+      setToast({ type: 'error', message: 'Please complete the “I am human” check.' });
+      setTimeout(() => setToast(null), 5000);
+      return;
+    }
 
     setLoading(true);
     const controller = new AbortController();
@@ -65,7 +73,7 @@ export default function ContactForm() {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, optInMarketing }),
+        body: JSON.stringify({ ...form, optInMarketing, hcaptchaToken: captchaToken }),
         signal: controller.signal,
       });
       clearTimeout(timeout);
@@ -85,6 +93,8 @@ export default function ContactForm() {
       setToast({ type: 'error', message });
     } finally {
       setLoading(false);
+      captchaRef.current?.resetCaptcha();
+      setCaptchaToken('');
       setTimeout(() => setToast(null), 5000);
     }
   };
@@ -185,6 +195,8 @@ export default function ContactForm() {
             I'd like to receive optional promotional offers from OnBoard Print & Signs.
           </span>
         </label>
+
+        <Captcha ref={captchaRef} onVerify={setCaptchaToken} onExpire={() => setCaptchaToken('')} />
 
         <div className="mt-4">
           <button

@@ -1,12 +1,13 @@
 import { sendContactNotification, sendContactConfirmation } from './_lib/emailService.js';
 import { syncContactToBrevo } from './_lib/brevoService.js';
+import { verifyCaptcha } from './_lib/verifyCaptcha.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name, email, phone, message, optInMarketing } = req.body;
+  const { name, email, phone, message, optInMarketing, hcaptchaToken } = req.body;
 
   // Validation
   const errors = [];
@@ -16,6 +17,10 @@ export default async function handler(req, res) {
 
   if (errors.length > 0) {
     return res.status(400).json({ success: false, error: errors.join(' ') });
+  }
+
+  if (!(await verifyCaptcha(hcaptchaToken))) {
+    return res.status(400).json({ success: false, error: 'Captcha verification failed. Please try again.' });
   }
 
   try {

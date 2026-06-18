@@ -1,5 +1,6 @@
 import { sendQuoteNotification, sendContactConfirmation } from './_lib/emailService.js';
 import { persistQuoteSubmission, persistQuoteSubmissionFromPaths } from './_lib/quoteStorage.js';
+import { verifyCaptcha } from './_lib/verifyCaptcha.js';
 
 export const config = {
   api: { bodyParser: false },
@@ -135,6 +136,10 @@ export default async function handler(req, res) {
 
   if (errors.length > 0) {
     return res.status(400).json({ success: false, error: errors.join(' ') });
+  }
+
+  if (!(await verifyCaptcha(fields.hcaptchaToken))) {
+    return res.status(400).json({ success: false, error: 'Captcha verification failed. Please try again.' });
   }
 
   // Save the lead + files to Supabase (creates an Opportunity task, records
