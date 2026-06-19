@@ -204,6 +204,9 @@ export default function QuoteForm({ preselectedService = '' }) {
         });
       } catch { /* Brevo sync is best-effort — never block the submission */ }
 
+      // Lead conversion event for GTM / GA4 (counts inquiries).
+      window.dataLayer?.push({ event: 'generate_lead', form_type: 'quote', service: form.service });
+
       setToast({ type: 'success', message: 'Quote request submitted! We will be in touch within 2 hours.' });
       setForm({ name: '', email: '', phone: '', company: '', service: '', description: '', quantity: '', deadline: '', budget: '' });
       setFiles([]);

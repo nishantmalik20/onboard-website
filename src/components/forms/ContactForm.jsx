@@ -83,6 +83,9 @@ export default function ContactForm() {
         throw new Error(data.error || 'Server returned an error.');
       }
 
+      // Lead conversion event for GTM / GA4 (counts inquiries).
+      window.dataLayer?.push({ event: 'generate_lead', form_type: 'contact' });
+
       setToast({ type: 'success', message: 'Message sent! We will get back to you shortly.' });
       setForm({ name: '', email: '', phone: '', message: '' });
     } catch (err) {
