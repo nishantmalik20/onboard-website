@@ -1,4 +1,28 @@
 {
+  "redirects": [
+    { "source": "/products/vehicle-graphics", "destination": "/products/vehicle-wraps-winnipeg", "permanent": true },
+    { "source": "/products/wall-graphics", "destination": "/products/custom-wallpaper-winnipeg", "permanent": true },
+    { "source": "/products/digital-marketing", "destination": "/services/website-application-development", "permanent": true },
+    { "source": "/products/real-estate-marketing", "destination": "/products/yard-signs-winnipeg", "permanent": true },
+    { "source": "/products/lage-format-printing", "destination": "/products", "permanent": true },
+    { "source": "/products/signs-that-make-an-impact", "destination": "/products", "permanent": true },
+    { "source": "/products/beautiful-gurbani-wall-art-36-24", "destination": "/products", "permanent": true },
+    { "source": "/products/beautiful-punjabi-alphabet-wall-art", "destination": "/products", "permanent": true },
+    { "source": "/products/guru-nanak-dev-ji-walart", "destination": "/products", "permanent": true },
+    { "source": "/products/punjabi-wall-art", "destination": "/products", "permanent": true },
+    { "source": "/products/two-ducks-wall-art-a-perfect-blend-of-elegance-and-charm", "destination": "/products", "permanent": true },
+    { "source": "/products/punjabi-learning-sound-book", "destination": "/products", "permanent": true },
+    { "source": "/products/punjab-map-with-punjabi-alphabet", "destination": "/products", "permanent": true },
+    { "source": "/pages/services", "destination": "/services", "permanent": true },
+    { "source": "/pages/about-us", "destination": "/about", "permanent": true },
+    { "source": "/pages/our-portfolio", "destination": "/portfolio", "permanent": true },
+    { "source": "/pages/contact", "destination": "/contact", "permanent": true },
+    { "source": "/pages/products", "destination": "/products", "permanent": true },
+    { "source": "/pages/refund-policy", "destination": "/", "permanent": true },
+    { "source": "/collections/:path*", "destination": "/products", "permanent": true },
+    { "source": "/blogs/:path*", "destination": "/blog", "permanent": true },
+    { "source": "/pages/:path*", "destination": "/", "permanent": true }
+  ],
   "rewrites": [
     {
       "source": "/((?!api/).*)",
