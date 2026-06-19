@@ -42,12 +42,943 @@ function IL({ to, children }) {
 
 /* ─── Blog post data ─── */
 const posts = {
+  "election-signs-winnipeg-2026": {
+  "title": "Election Signs in Winnipeg: A 2026 Candidate's Guide",
+  "metaTitle": "Election Signs Winnipeg: A 2026 Candidate's Guide",
+  "metaDesc": "Planning election signs in Winnipeg for the Oct 28, 2026 vote? Get sizes, bulk coroplast pricing, City placement rules, and fast campaign turnaround.",
+  "category": "Business Tips",
+  "date": "June 18, 2026",
+  "readTime": "8 min read",
+  "heroImage": {
+    "src": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80&auto=format&fit=crop",
+    "alt": "Rows of double-sided coroplast election lawn signs on H-stakes lined up outside a Winnipeg print shop before installation"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "If you're a candidate in Winnipeg's October 28, 2026 municipal election, here's the short answer: standard 18\"x24\" double-sided coroplast lawn signs run roughly $9 to $16 each in small batches, and the per-sign price drops fast with volume — often landing near $5 to $7 each once you order 100 or more, and lower again past 250. A typical ward campaign budgets for 150 to 400 lawn signs plus a handful of large 4'x8' signs for high-traffic corners. Add about $1 to $2 per sign for an H-stake or wire frame to get them in the ground."
+    },
+    {
+      "type": "p",
+      "text": "The bigger point: order your election signs in Winnipeg now, not in September. Coroplast, H-stakes, and ink are commodity items, but every candidate in the city hits the same suppliers in the final six weeks. We can turn a proof and a full run around in days — often with same-day printing and 24-hour turnaround on rush batches — but the campaigns that lock in early get the best pricing, the cleanest design help, and signs in voters' yards while opponents are still waiting on a proof."
+    },
+    {
+      "type": "h2",
+      "text": "What election signs in Winnipeg actually cost"
+    },
+    {
+      "type": "p",
+      "text": "Election sign pricing is almost entirely about quantity. The setup, the proof, and the print file are the same whether you order 25 signs or 250 — so the more you print, the less each one costs. Coroplast (corrugated plastic) is the workhorse material: it's light, weatherproof, holds up to Manitoba wind and rain through October, and it's cheap to produce at volume. Below is a realistic range for the most common election sign — an 18\"x24\" double-sided coroplast lawn sign, full colour, printed in-house in Winnipeg."
+    },
+    {
+      "type": "table",
+      "rows": [
+        [
+          "Quantity",
+          "Per-sign (18\"x24\", double-sided coroplast)",
+          "Approx. batch total"
+        ],
+        [
+          "25",
+          "$13 – $16",
+          "$325 – $400"
+        ],
+        [
+          "50",
+          "$9 – $12",
+          "$450 – $600"
+        ],
+        [
+          "100",
+          "$6.50 – $8.50",
+          "$650 – $850"
+        ],
+        [
+          "250+",
+          "$4.50 – $6.50",
+          "$1,125 – $1,625"
+        ]
+      ]
+    },
+    {
+      "type": "p",
+      "text": "These are ballpark ranges to help you budget — final pricing depends on size, single vs. double-sided, ink coverage, and whether you need stakes. For an exact number, we send free itemized quotes, usually within about two hours, so you can see line items for signs, stakes, design, and any rush fee before you commit a dollar of campaign money."
+    },
+    {
+      "type": "h2",
+      "text": "Sizes and where each one earns its keep"
+    },
+    {
+      "type": "p",
+      "text": "Most Winnipeg campaigns run two or three sizes. Don't overthink it — name recognition wins municipal races, so volume of small signs usually beats a few big ones, with a couple of large signs reserved for the spots everyone drives past."
+    },
+    {
+      "type": "bullets",
+      "items": [
+        {
+          "bold": "18\"x24\" lawn signs",
+          "text": "The default. Cheap at volume, easy for supporters to plant, and the right size for residential front yards. This is where 70 to 80% of your order should sit."
+        },
+        {
+          "bold": "24\"x36\" lawn signs",
+          "text": "A step up in presence for busier residential streets, boulevards-adjacent private lots, and supporter homes on corner lots. Use sparingly — they cost more and you need fewer."
+        },
+        {
+          "bold": "4'x8' large-format signs",
+          "text": "Your billboard play. One or two of these on a consenting business property or a high-traffic private lot near a major intersection does the work of dozens of lawn signs. Mount on a sturdy wood or steel frame, not H-stakes."
+        }
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Single vs. double-sided, and how to stake them"
+    },
+    {
+      "type": "p",
+      "text": "Almost every lawn sign should be double-sided. Voters approach from both directions, and a one-sided sign is invisible to half of them. Single-sided only makes sense when a sign sits flat against a wall or window where one face will never be seen — which is rare in a yard-sign campaign. The small extra cost for double-sided printing is the best money in your sign budget."
+    },
+    {
+      "type": "p",
+      "text": "For mounting, you've got two standard options for coroplast:"
+    },
+    {
+      "type": "list",
+      "items": [
+        "H-stakes (wire step-stakes): the classic galvanized wire frame that slides into the flutes on the bottom edge of a coroplast sign. Fast to install, easy to pull, and the cheapest way to get a sign standing — ideal for lawns.",
+        "Wire frames / heavier ground stakes: a sturdier option for larger 24\"x36\" signs or windy, exposed locations where a light H-stake won't hold through a prairie gust."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "We supply stakes and frames with your order so everything ships ready to deploy — no scrambling at a hardware store the night before your volunteers head out."
+    },
+    {
+      "type": "h2",
+      "text": "City of Winnipeg placement rules every candidate should know"
+    },
+    {
+      "type": "p",
+      "text": "This is where campaigns get into trouble. Election sign placement in Winnipeg is governed by City rules, and bylaws do get updated — so treat the points below as the general framework and confirm the current regulations with the City of Winnipeg (and Elections Manitoba for provincial timing context) before you plant a single sign. As a rule of thumb that has held in Winnipeg:"
+    },
+    {
+      "type": "bullets",
+      "items": [
+        {
+          "bold": "Private property, with consent only",
+          "text": "Place signs on private property where the owner has given permission. A supporter's front lawn is fine; a stranger's, a vacant lot, or a business you haven't asked is not."
+        },
+        {
+          "bold": "Stay off public boulevards and medians",
+          "text": "City boulevards, medians, and the road allowance are generally off-limits. The grassy strip between the sidewalk and the curb is usually public land, even if it fronts a private home — when in doubt, set the sign back onto the actual private lot."
+        },
+        {
+          "bold": "Never block sightlines or traffic signs",
+          "text": "Keep signs clear of intersections, driveways, crosswalks, and anything that obstructs a driver's view or competes with a stop sign, traffic signal, or street sign. Safety complaints get signs pulled fast."
+        },
+        {
+          "bold": "Mind the timing and remove promptly",
+          "text": "There are typically limits on how early signs can go up and a hard deadline to remove them after election day. Pull your signs quickly once October 28 has passed — leftover signs are the fastest way to annoy the voters and neighbours you just spent a campaign courting."
+        }
+      ]
+    },
+    {
+      "type": "p",
+      "text": "We can't make the call on every location for you, but we will print clear placement reminders and point you to the right City contacts so your volunteers aren't guessing on doorsteps."
+    },
+    {
+      "type": "h2",
+      "text": "Campaign turnaround and free design help"
+    },
+    {
+      "type": "p",
+      "text": "A campaign moves fast, and your sign printer should too. Everything here is done in-house in Winnipeg — design, printing, and finishing under one roof — so there's no middleman slowing down a reprint when your numbers come in or your slogan changes. Rush batches can move on same-day printing or 24-hour turnaround when you're up against a debate, an endorsement, or a sudden surge of volunteer requests."
+    },
+    {
+      "type": "p",
+      "text": "If you don't have a designer, we'll help you build a clean, readable sign for free. The fundamentals matter more than fancy artwork: your name big and bold, the office you're running for, the ward or position, and high contrast so it reads from a moving car. We'll set up the file, send you a proof, and get it production-ready without an extra design bill eating into your budget."
+    },
+    {
+      "type": "p",
+      "text": "OnBoard Print & Signs is BBB A+ rated, WCB insured with $5M liability, and a member of the Sign Association of Canada (SAC) and the Manitoba Sign Association (MANSA) — so you're working with an established local shop, not a pop-up that disappears after election day."
+    },
+    {
+      "type": "p",
+      "text": "The municipal vote is October 28, 2026, and the campaigns with signs in the ground first set the tone. Call us at +1-204-869-1503 or request a free itemized quote — we'll usually have numbers back to you within about two hours so you can budget your run today and keep your campaign moving."
+    },
+    {
+      "type": "cta",
+      "to": "/products/yard-signs-winnipeg",
+      "text": "Get a free election sign quote"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "How much do election signs cost in Winnipeg?",
+      "a": "Standard 18\"x24\" double-sided coroplast lawn signs run roughly $9 to $16 each in small batches, dropping to about $5 to $7 each at 100 or more, and lower past 250. H-stakes add about $1 to $2 per sign. Free itemized quotes are usually back within about two hours."
+    },
+    {
+      "q": "How many lawn signs does a Winnipeg ward campaign need?",
+      "a": "Most municipal ward campaigns budget for 150 to 400 standard 18\"x24\" coroplast lawn signs, plus one or two large 4'x8' signs for high-traffic corners. Name recognition wins these races, so volume of small signs usually beats a few large ones."
+    },
+    {
+      "q": "Where can I legally place election signs in Winnipeg?",
+      "a": "On private property with the owner's consent only. Keep signs off public boulevards, medians, and road allowances, clear of intersection sightlines and traffic signs, and remove them promptly after election day. Always confirm current City of Winnipeg rules before placing signs."
+    },
+    {
+      "q": "How fast can you print election signs before the October 2026 vote?",
+      "a": "Because design, printing, and finishing are all done in-house in Winnipeg, rush batches can move on same-day printing or 24-hour turnaround. Ordering early still gets you the best pricing and design help, so don't wait until September."
+    },
+    {
+      "q": "Should election signs be single or double-sided?",
+      "a": "Double-sided, almost always. Voters and drivers approach lawn signs from both directions, so a single-sided sign is invisible to half of them. The small extra cost for double-sided printing is the best value in a campaign sign budget."
+    }
+  ],
+  "relatedSlugs": [
+    "large-format-printing-winnipeg",
+    "new-business-signage-checklist-winnipeg"
+  ]
+},
+  "vehicle-wrap-cost-winnipeg": {
+  "title": "How Much Does a Vehicle Wrap Cost in Winnipeg? (2026)",
+  "metaTitle": "Vehicle Wrap Cost Winnipeg: Real Prices (2026 Guide)",
+  "metaDesc": "What does a vehicle wrap cost in Winnipeg in 2026? Real pricing from $200 decals to $5,000 full wraps, plus cost factors, lifespan, and ROI for local fleets.",
+  "category": "Vehicle Wraps",
+  "date": "June 17, 2026",
+  "readTime": "8 min read",
+  "heroImage": {
+    "src": "https://images.unsplash.com/photo-1732690113224-e4230dd9a549?q=80&w=1974&auto=format&fit=crop",
+    "alt": "A cargo van being fitted with a full-colour vinyl vehicle wrap inside a Winnipeg fabrication shop, installer smoothing graphics across the side panel"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "If you want the short answer on vehicle wrap cost in Winnipeg: expect to pay roughly $200 to $800 for decals and lettering, $1,000 to $2,500 for a partial wrap, and $2,500 to $5,000+ for a full wrap. Most full wraps on a standard vehicle land in the $2,500 to $3,500 range once you factor in design, premium vinyl, and professional installation."
+    },
+    {
+      "type": "p",
+      "text": "Where your project sits inside those ranges comes down to a handful of things: the size and shape of the vehicle, how much of it you're covering, the finish you choose, and how complex the artwork is. Below we break down every one of those factors with real Winnipeg numbers so you can budget with confidence instead of guessing. We fabricate and install everything in-house, so these aren't broker estimates marked up through a middleman."
+    },
+    {
+      "type": "h2",
+      "text": "Vehicle Wrap Cost in Winnipeg: Price Ranges by Coverage"
+    },
+    {
+      "type": "p",
+      "text": "The single biggest driver of price is how much of the vehicle you're covering. A few door decals is a different job than wrapping a 24-foot box truck bumper to bumper. Here's where the numbers typically fall for the Winnipeg market in 2026:"
+    },
+    {
+      "type": "table",
+      "rows": [
+        [
+          "Coverage Type",
+          "Typical Price (CAD)",
+          "Best For"
+        ],
+        [
+          "Decals & lettering",
+          "$200 - $800",
+          "Logo, phone number, basic branding on doors and tailgate"
+        ],
+        [
+          "Partial wrap",
+          "$1,000 - $2,500",
+          "Doors, rear quarters, and accents without full coverage"
+        ],
+        [
+          "Full wrap (standard vehicle)",
+          "$2,500 - $3,500",
+          "Complete colour change or full graphic coverage on a car, SUV, or van"
+        ],
+        [
+          "Full wrap (large vehicle)",
+          "$3,500 - $5,000+",
+          "Cargo vans, box trucks, and trailers with large surface areas"
+        ],
+        [
+          "Fleet / multi-vehicle",
+          "Volume discount applied",
+          "3+ vehicles branded consistently"
+        ]
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Decals and lettering are the entry point. If you just need your logo, web address, and a phone number on the doors of a work truck, you're looking at the low hundreds, not thousands. Partial wraps give you a high-impact branded look at a friendlier price by covering the most visible panels. Full wraps are the premium option that turns the entire vehicle into a moving billboard."
+    },
+    {
+      "type": "h2",
+      "text": "What Actually Drives the Price Up or Down"
+    },
+    {
+      "type": "p",
+      "text": "Two business owners can both ask for a 'full wrap' and get quotes that are $1,500 apart. That's not random. These are the variables that move the number:"
+    },
+    {
+      "type": "bullets",
+      "items": [
+        {
+          "bold": "Vehicle size and type",
+          "text": "A compact car has far less surface area than a cargo van, box truck, or enclosed trailer. More vinyl and more install labour means a higher price. A Smart car and a 26-foot box truck are not the same job."
+        },
+        {
+          "bold": "Coverage level",
+          "text": "Decal vs. partial vs. full is the biggest single factor. Every additional panel adds material and time."
+        },
+        {
+          "bold": "Finish",
+          "text": "Standard gloss is the baseline. Matte, satin, chrome, brushed metal, and carbon-fibre textured films cost meaningfully more per square foot and can add hundreds to a full wrap."
+        },
+        {
+          "bold": "Design complexity",
+          "text": "A clean logo-and-colour layout prints and installs faster than full-bleed photographic artwork with tight registration across seams, mirrors, and door handles."
+        },
+        {
+          "bold": "Vinyl grade",
+          "text": "Premium cast vinyl conforms to curves and lasts for years; cheaper calendared vinyl is fine for flat short-term signage but shrinks and lifts on contours. We quote cast for vehicle wraps because Winnipeg weather is unforgiving."
+        },
+        {
+          "bold": "Surface prep and old-wrap removal",
+          "text": "Stripping a previous wrap, correcting paint issues, or extra cleaning adds labour. Removal of an old full wrap can add a few hundred dollars on its own."
+        }
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "What a Proper Wrap Quote Should Include"
+    },
+    {
+      "type": "p",
+      "text": "Cheap quotes usually leave things out, then the surprises show up later. A real, itemized quote should cover the whole job from start to finish:"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Professional design and proofing — print-ready artwork built to fit your specific vehicle's panels, not a stretched logo",
+        "Premium cast vinyl rated for the work, not budget calendared film",
+        "Protective lamination over the print to guard against UV fade, road salt, and stone chips",
+        "Full installation by trained installers, including removal of mirrors and trim where needed for a clean wrap",
+        "Surface prep and, if applicable, removal of any existing graphics"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Because we run design, fabrication, and installation under one roof, your quote reflects the actual work, not a stack of subcontractor markups. We send free, itemized quotes within about two hours so you can see exactly what you're paying for before you commit a dollar."
+    },
+    {
+      "type": "h2",
+      "text": "How Long Does a Vehicle Wrap Last in Winnipeg?"
+    },
+    {
+      "type": "p",
+      "text": "A quality wrap using premium cast vinyl and lamination lasts 5 to 7 years. That lifespan assumes proper material, professional installation, and reasonable care — which matters a lot here, because Winnipeg puts wraps through the wringer. Minus-30 winters, road salt, summer UV, and gravel all take a toll, and that's exactly why we don't cut corners on the film grade. Cheaper vinyl might save you a few hundred dollars up front and then crack, fade, or peel after a couple of prairie winters, which is the most expensive kind of savings."
+    },
+    {
+      "type": "h2",
+      "text": "The Real ROI: Why a Wrap Is the Cheapest Ad You Can Buy"
+    },
+    {
+      "type": "p",
+      "text": "Here's the part that reframes the whole conversation. A single wrapped vehicle driving Winnipeg routes — Portage, Pembina, the Perimeter, your daily job sites — generates tens of thousands of visual impressions every day. Spread a $3,000 wrap that lasts 5+ years across all those impressions and the cost-per-impression is a fraction of a cent. There is no radio spot, billboard, or social ad that competes with that math."
+    },
+    {
+      "type": "bullets",
+      "items": [
+        {
+          "bold": "One-time cost, years of exposure",
+          "text": "Unlike monthly ad spend, you pay once and the wrap keeps working for 5 to 7 years."
+        },
+        {
+          "bold": "Always local",
+          "text": "Your van advertises to the exact Winnipeg neighbourhoods you actually serve, every single day."
+        },
+        {
+          "bold": "Built-in credibility",
+          "text": "A professionally wrapped vehicle signals an established, legitimate business — it builds trust before you ever knock on the door."
+        }
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Why Buy Your Wrap From OnBoard"
+    },
+    {
+      "type": "p",
+      "text": "We're a full-service Winnipeg print and signage shop, and vehicle wraps are squarely in our wheelhouse. Everything is done in-house with UL-certified fabrication, so quality and timeline stay under our control. We're BBB A+ rated, members of the Sign Association of Canada and the Manitoba Sign Association, WCB insured, and carry $5M liability — so you're covered, not exposed, when our crew is working on your vehicle."
+    },
+    {
+      "type": "p",
+      "text": "We also move fast. Same-day printing and 24-hour turnaround are available when you're up against a deadline, and because we handle design, fabrication, installation, City of Winnipeg permits, and even your web presence, you're dealing with one team end to end instead of chasing four vendors."
+    },
+    {
+      "type": "p",
+      "text": "Ready to see real numbers for your vehicle? Call us at +1-204-869-1503 or request a free, itemized quote and we'll get one back to you within about two hours — no pressure, no guesswork, just an honest price for the job."
+    },
+    {
+      "type": "cta",
+      "to": "/products/vehicle-wraps-winnipeg",
+      "text": "Get a free vehicle wrap quote"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "How much does a full vehicle wrap cost in Winnipeg?",
+      "a": "Most full wraps on a standard car, SUV, or van land between $2,500 and $3,500. Larger vehicles like cargo vans, box trucks, and trailers run $3,500 to $5,000 or more because of the extra surface area and install labour."
+    },
+    {
+      "q": "Is a partial wrap or just decals cheaper than a full wrap?",
+      "a": "Yes. Decals and lettering run $200 to $800 and partial wraps run $1,000 to $2,500, versus $2,500+ for a full wrap. A partial wrap is a popular middle ground that gives strong branding on the most visible panels for far less."
+    },
+    {
+      "q": "How long will a vehicle wrap last in Winnipeg's climate?",
+      "a": "A quality wrap made with premium cast vinyl and lamination lasts 5 to 7 years. We spec cast film specifically because Winnipeg's salt, UV, and deep-freeze winters destroy cheaper calendared vinyl far sooner."
+    },
+    {
+      "q": "Do you offer discounts for wrapping a fleet of vehicles?",
+      "a": "Yes. We apply volume discounts for multi-vehicle and fleet projects (typically three or more vehicles), and consistent branding across the fleet keeps per-vehicle design costs down too. Call us for a fleet quote."
+    },
+    {
+      "q": "How fast can you wrap my vehicle?",
+      "a": "It depends on coverage and design complexity, but we offer same-day printing and 24-hour turnaround on many jobs. Since we design, print, and install in-house, we control the timeline end to end — call +1-204-869-1503 for current scheduling."
+    }
+  ],
+  "relatedSlugs": [
+    "how-to-choose-vehicle-wrap-vinyl-winnipeg",
+    "vehicle-wraps-vs-billboards-winnipeg"
+  ]
+},
+  "banner-printing-winnipeg": {
+  "title": "Banner Printing in Winnipeg: Sizes, Materials & Pricing (2026)",
+  "metaTitle": "Banner Printing Winnipeg: Sizes & Pricing (2026 Guide)",
+  "metaDesc": "Banner printing Winnipeg: real 2026 prices, sizes (2x4 to 4x10), vinyl vs mesh vs retractable, finishing options, and same-day rush. Free quote in ~2 hours.",
+  "category": "Print",
+  "date": "June 12, 2026",
+  "readTime": "8 min read",
+  "heroImage": {
+    "src": "https://images.unsplash.com/photo-1662001234358-45b7493d2bc0?q=80&w=2070&auto=format&fit=crop",
+    "alt": "Freshly printed vinyl banners with grommets and hemmed edges laid out in a Winnipeg print shop ready for pickup"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "For most jobs, banner printing in Winnipeg runs roughly $40 to $70 for a small 2x4 ft vinyl banner, $80 to $130 for a 3x6, and $150 to $250 for a full 4x8 ft outdoor banner. A retractable pull-up stand for trade shows lands around $150 to $250 complete with hardware. Mesh banners cost a little more than standard vinyl because of the specialty material. Those are real installed-and-finished numbers, not stripped-down web specials with hidden add-ons."
+    },
+    {
+      "type": "p",
+      "text": "Your final price comes down to four things: size, material weight (13oz everyday vs 18oz heavy-duty), finishing (hemmed edges, grommets, pole pockets), and turnaround. We print banners in-house here in Winnipeg, so we can quote you accurately and, when you're in a bind, turn same-day or 24-hour rush jobs without farming the work out. Below is everything you actually need to decide, plus a pricing table you can budget against."
+    },
+    {
+      "type": "h2",
+      "text": "What you'll pay for banner printing in Winnipeg (2026)"
+    },
+    {
+      "type": "p",
+      "text": "Here are realistic Winnipeg ranges for the most common banner orders in 2026. Prices assume full-colour printing on quality material with standard finishing (hemmed edges and grommets). Larger quantities bring the per-unit cost down, and design is quoted separately if you don't have print-ready artwork."
+    },
+    {
+      "type": "table",
+      "rows": [
+        [
+          "Banner type / size",
+          "Material",
+          "Rough Winnipeg price (2026)"
+        ],
+        [
+          "2x4 ft vinyl",
+          "13oz everyday",
+          "$40 – $70"
+        ],
+        [
+          "3x6 ft vinyl",
+          "13oz everyday",
+          "$80 – $130"
+        ],
+        [
+          "4x8 ft vinyl",
+          "13oz / 18oz",
+          "$150 – $250"
+        ],
+        [
+          "4x10 ft vinyl",
+          "18oz heavy-duty",
+          "$220 – $340"
+        ],
+        [
+          "Mesh banner (per sq ft)",
+          "Wind-rated mesh",
+          "~10–20% above vinyl"
+        ],
+        [
+          "Retractable / pull-up stand",
+          "Stand + printed graphic",
+          "$150 – $250"
+        ],
+        [
+          "Pole flag (single-sided)",
+          "Knitted polyester",
+          "$120 – $200"
+        ],
+        [
+          "Feather / teardrop flag kit",
+          "Flag + pole + base",
+          "$180 – $320"
+        ]
+      ]
+    },
+    {
+      "type": "p",
+      "text": "A few things that move the number: double-sided printing roughly adds 60 to 80 percent over single-sided; pole pockets instead of grommets are usually a small upcharge; and reinforced webbing on big outdoor banners (4x10 and up) is worth the few extra dollars in a city that gets the wind we do."
+    },
+    {
+      "type": "h2",
+      "text": "Vinyl banners: 13oz everyday vs 18oz heavy-duty"
+    },
+    {
+      "type": "p",
+      "text": "Vinyl is the workhorse. It's printed full-colour, holds bright graphics, and handles both indoor and outdoor use. The decision is really about weight, and that maps directly to how long the banner needs to survive."
+    },
+    {
+      "type": "bullets",
+      "items": [
+        {
+          "bold": "13oz scrim vinyl (everyday):",
+          "text": "the standard choice for indoor events, short-term outdoor promos, grand openings and sales. Lighter, more affordable, and perfectly durable for weeks to a season."
+        },
+        {
+          "bold": "18oz heavy-duty vinyl:",
+          "text": "thicker, more tear-resistant, and built for long-term outdoor exposure. The right call for construction hoarding, year-round building banners, and anything that has to ride out a Winnipeg winter."
+        },
+        {
+          "bold": "Rule of thumb:",
+          "text": "if the banner lives outside for more than a few months, or it's large enough to catch real wind load, step up to 18oz. For a weekend or a storefront promo, 13oz is plenty."
+        }
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Mesh banners: built for wind and fences"
+    },
+    {
+      "type": "p",
+      "text": "Mesh vinyl has thousands of tiny perforations that let wind pass through instead of pushing against a solid sheet. That makes it the smart pick for fence-line banners, construction hoarding, and any large outdoor display exposed to gusts. You give up a little colour saturation and opacity compared to solid vinyl, but you gain a banner that won't sail, sag, or tear its grommets out in a prairie windstorm."
+    },
+    {
+      "type": "p",
+      "text": "Mesh runs slightly higher than standard vinyl per square foot because of the specialty material, but for big perimeter banners on chain-link it's almost always the right long-term spend."
+    },
+    {
+      "type": "h2",
+      "text": "Retractable stands, pole flags and feather flags"
+    },
+    {
+      "type": "p",
+      "text": "Not every banner hangs on a wall. For trade shows, lobbies, and recurring events, freestanding displays are easier to set up and reuse."
+    },
+    {
+      "type": "bullets",
+      "items": [
+        {
+          "bold": "Retractable / pull-up stands:",
+          "text": "the trade-show standard. The printed graphic rolls into a self-contained base, sets up in under a minute, and packs into a carry bag. Around $150 to $250 complete, and you can reprint just the graphic later to refresh it."
+        },
+        {
+          "bold": "Pole banners:",
+          "text": "mounted on light standards or building poles, great for streetscapes, dealerships, and campus signage. Printed on weather-tough material with reinforced pole pockets."
+        },
+        {
+          "bold": "Feather & teardrop flags:",
+          "text": "tall, eye-catching, and impossible to ignore from the road. Ideal for real estate open houses, seasonal sales, and anything that needs to flag down drivers on a busy Winnipeg corridor."
+        }
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Common banner sizes in Winnipeg"
+    },
+    {
+      "type": "p",
+      "text": "You can print a banner at almost any dimension, but these standard sizes cover the vast majority of orders and keep costs predictable:"
+    },
+    {
+      "type": "list",
+      "items": [
+        "2x4 ft — counter signs, small storefront promos, behind-the-table event banners",
+        "3x6 ft — grand openings, booth backdrops, sale announcements",
+        "4x8 ft — building banners, real estate, the most popular outdoor size",
+        "4x10 ft — large facade banners and construction hoarding where you need impact from a distance"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Not sure which size reads best from where your customers will see it? That's exactly the kind of thing we'll sort out on the quote call — viewing distance drives both the size and the minimum text height."
+    },
+    {
+      "type": "h2",
+      "text": "Finishing: hemmed edges, grommets and pole pockets"
+    },
+    {
+      "type": "p",
+      "text": "Finishing is what separates a banner that lasts from one that frays in a month. It's a small line item that makes a big difference."
+    },
+    {
+      "type": "bullets",
+      "items": [
+        {
+          "bold": "Hemmed edges:",
+          "text": "the banner edge is folded and welded to reinforce it. This is the standard on quality banners and dramatically reduces tearing and fraying."
+        },
+        {
+          "bold": "Grommets:",
+          "text": "metal eyelets, typically every 2 to 3 feet, that give you clean, strong tie-down points for zip ties, rope, or bungees."
+        },
+        {
+          "bold": "Pole pockets:",
+          "text": "sewn sleeves at the top and/or bottom so a pole or dowel slides through — the cleaner look for hanging banners and pole displays."
+        },
+        {
+          "bold": "Wind slits / reinforced webbing:",
+          "text": "recommended on large outdoor banners to handle wind load and keep grommets from pulling through."
+        }
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Indoor vs outdoor durability"
+    },
+    {
+      "type": "p",
+      "text": "Indoors, a 13oz vinyl banner with UV-stable inks will look sharp for years — they're effectively a one-and-done for lobbies, gyms and event spaces. Outdoors is where material and finishing choices earn their keep. A properly finished 13oz banner handles a season of Winnipeg weather comfortably; for multi-year outdoor life, 18oz vinyl (or mesh where wind is a factor) plus reinforced grommets is the combination that holds up through freeze-thaw, sun, and wind."
+    },
+    {
+      "type": "p",
+      "text": "We print with outdoor-rated, UV-resistant inks as standard, so fading isn't the first thing that goes — the substrate and the finishing are what determine real-world lifespan."
+    },
+    {
+      "type": "h2",
+      "text": "Need it fast? Same-day and 24-hour banners"
+    },
+    {
+      "type": "p",
+      "text": "Event tomorrow? Because everything is produced in-house, we offer same-day printing and 24-hour turnaround on banners when the schedule allows. Get print-ready artwork to us early in the day and a standard vinyl banner can often be ready the same afternoon. The honest caveat: rush capacity depends on the day's queue and the complexity of the job, so call as early as you can and we'll tell you straight whether we can hit your deadline."
+    },
+    {
+      "type": "p",
+      "text": "Typical rush scenarios we handle for Winnipeg businesses: a last-minute trade-show backdrop, a grand-opening banner, a same-week real estate sign, or replacement construction hoarding after weather damage."
+    },
+    {
+      "type": "h2",
+      "text": "What businesses use banners for"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Grand openings and ribbon cuttings",
+        "Trade shows and conference booths (retractable stands + backdrops)",
+        "Construction hoarding and site fencing",
+        "Seasonal and clearance sales",
+        "Real estate listings and open houses",
+        "Festivals, fundraisers and community events",
+        "Sponsorship and arena/field signage"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Why buy your banners from OnBoard"
+    },
+    {
+      "type": "p",
+      "text": "We're a full-service Winnipeg print and signage shop, and banners are only the start. Because we run design, fabrication, installation, City of Winnipeg sign permits and even web all under one roof, you're never stuck coordinating three vendors. For larger sign projects our fabrication is UL-certified, we're WCB insured and carry $5M liability for installs, we hold an A+ rating with the BBB, and we're members of the Sign Association of Canada (SAC) and the Manitoba Sign Association (MANSA). Translation: your banner is done right, on time, and standing behind a real local team."
+    },
+    {
+      "type": "p",
+      "text": "Want a number you can budget against? Call us at +1-204-869-1503 and we'll send a free, itemized quote — usually within about two hours — so you know exactly what your banner costs before you commit."
+    },
+    {
+      "type": "cta",
+      "to": "/quote",
+      "text": "Get a free banner quote"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "How much does a 4x8 banner cost in Winnipeg?",
+      "a": "A full-colour 4x8 ft vinyl banner typically runs about $150 to $250 in Winnipeg, depending on material weight (13oz vs 18oz) and finishing. We'll send a free itemized quote, usually within about two hours."
+    },
+    {
+      "q": "Can I get a banner printed same-day in Winnipeg?",
+      "a": "Yes. Because we print in-house, we offer same-day and 24-hour turnaround on banners when our schedule allows. Send print-ready artwork early and call ahead at +1-204-869-1503 so we can confirm your deadline."
+    },
+    {
+      "q": "What's the difference between 13oz and 18oz vinyl banners?",
+      "a": "13oz is the everyday choice for indoor use and short-term outdoor promos, while 18oz is thicker, more tear-resistant, and built for long-term outdoor exposure like construction hoarding and year-round building banners."
+    },
+    {
+      "q": "Should I choose a mesh or vinyl banner for outdoors?",
+      "a": "Choose mesh for fences and windy locations — the perforations let wind pass through so the banner won't sail or tear. Choose solid vinyl when you want maximum colour saturation and the banner isn't taking heavy wind load."
+    },
+    {
+      "q": "Do I need a permit for a banner in Winnipeg?",
+      "a": "Most temporary banners on your own property are fine, but some locations, sizes, and durations trigger City of Winnipeg sign rules. We handle sign permits in-house, so we'll flag anything that needs one before you order."
+    }
+  ],
+  "relatedSlugs": [
+    "same-day-printing-winnipeg-guide",
+    "large-format-printing-winnipeg"
+  ]
+},
+  "large-format-printing-winnipeg": {
+  "title": "Large Format Printing in Winnipeg: The Complete Guide (2026)",
+  "metaTitle": "Large Format Printing in Winnipeg: Complete Guide (2026)",
+  "metaDesc": "Your complete guide to large format printing in Winnipeg: banners, signs, vehicle graphics, materials, pricing and same-day turnaround. Get a free quote in ~2 hours.",
+  "category": "Print",
+  "date": "June 9, 2026",
+  "readTime": "8 min read",
+  "heroImage": {
+    "src": "https://images.unsplash.com/photo-1627815416399-ddaae0e2fa54?q=80&w=2070&auto=format&fit=crop",
+    "alt": "Wide format printer producing a large vinyl banner inside a Winnipeg print and signage shop"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Large format printing in Winnipeg covers anything bigger than a standard office printer can handle: think banners, posters, backlit signs, window and wall graphics, trade-show displays, vehicle wraps and rigid yard signs. For most Winnipeg businesses, a basic vinyl banner runs roughly $7-$12 per square foot, coroplast yard signs land around $25-$45 each depending on size and quantity, and a full vehicle wrap typically falls between $2,800 and $4,500 installed. Rush and same-day work is available when you're up against a deadline."
+    },
+    {
+      "type": "p",
+      "text": "The short version: if you need something printed bigger than a sheet of paper and you need it to look sharp from across a parking lot or a trade-show floor, that's wide format printing. Because we run fabrication, installation and City of Winnipeg sign permits in-house, we can quote, print and often install without bouncing your job between three different vendors. Free itemized quotes come back in about two hours, and 24-hour turnaround (or same-day on simpler jobs) is on the table when the timeline is tight."
+    },
+    {
+      "type": "h2",
+      "text": "What Is Large Format Printing (and When Do You Actually Need It)?"
+    },
+    {
+      "type": "p",
+      "text": "Large format printing in Winnipeg, also called wide format printing, refers to any print job produced on printers built for materials wider than about 24 inches, scaling all the way up to full building banners and vehicle-sized graphics. Instead of toner on paper, these machines lay down weather-resistant inks on vinyl, fabric, rigid board and more. The result is large, high-impact graphics that hold up indoors and outdoors."
+    },
+    {
+      "type": "p",
+      "text": "You need it the moment a regular print shop says \"that's too big.\" Common triggers we see from Winnipeg business owners:"
+    },
+    {
+      "type": "bullets",
+      "items": [
+        {
+          "bold": "You're opening or rebranding",
+          "text": "and need storefront signage, window graphics and a banner for the grand opening."
+        },
+        {
+          "bold": "You're exhibiting at a trade show",
+          "text": "like a RBC Convention Centre event and need retractable banners and a backdrop."
+        },
+        {
+          "bold": "You run a vehicle or fleet",
+          "text": "and want your trucks or vans working as moving billboards across the city."
+        },
+        {
+          "bold": "You're a contractor or realtor",
+          "text": "needing coroplast yard signs, A-frames and site hoarding."
+        },
+        {
+          "bold": "You're running a promotion",
+          "text": "and need posters, point-of-sale graphics and a street-facing banner fast."
+        }
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Large Format Product Types: A Quick Overview"
+    },
+    {
+      "type": "p",
+      "text": "Here's a straight overview of the most common large format products, the material they're usually printed on, and what each one is best for. Use it as a starting point, then we'll match the exact spec to your job when you request a quote."
+    },
+    {
+      "type": "table",
+      "rows": [
+        [
+          "Product",
+          "Typical Material",
+          "Best Use"
+        ],
+        [
+          "Vinyl banners",
+          "13oz scrim vinyl",
+          "Events, grand openings, outdoor promos"
+        ],
+        [
+          "Posters & prints",
+          "Photo / poster paper",
+          "Indoor displays, point-of-sale, art"
+        ],
+        [
+          "Backlit signs",
+          "Translucent backlit film",
+          "Light boxes, illuminated storefront signs"
+        ],
+        [
+          "Window & wall graphics",
+          "Adhesive vinyl, perforated film",
+          "Storefront branding, privacy, murals"
+        ],
+        [
+          "Trade-show graphics",
+          "Tension fabric, retractable vinyl",
+          "Booths, backdrops, pop-up displays"
+        ],
+        [
+          "Vehicle graphics",
+          "Cast wrap vinyl",
+          "Wraps, decals, fleet branding"
+        ],
+        [
+          "Yard & rigid signs",
+          "Coroplast, Alupanel (ACM), PVC",
+          "Real estate, lawns, directional, A-frames"
+        ]
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Substrates: What Your Graphic Is Actually Printed On"
+    },
+    {
+      "type": "p",
+      "text": "The material matters as much as the artwork. Choosing the right substrate is the difference between a sign that survives a Manitoba winter and one that curls by February. Here's what we print on most and where each one shines:"
+    },
+    {
+      "type": "bullets",
+      "items": [
+        {
+          "bold": "Coroplast",
+          "text": "lightweight corrugated plastic. Cheap, weatherproof, perfect for yard signs and short-term outdoor use."
+        },
+        {
+          "bold": "Foamcore",
+          "text": "rigid foam board for indoor displays, presentation boards and event signage. Not for outdoor use."
+        },
+        {
+          "bold": "Alupanel / ACM",
+          "text": "aluminum composite panel. Rigid, premium and built to last years outdoors. Ideal for permanent storefront and building signs."
+        },
+        {
+          "bold": "Rigid PVC",
+          "text": "durable plastic board that handles indoor and sheltered outdoor signage with a clean, solid finish."
+        },
+        {
+          "bold": "Vinyl",
+          "text": "the workhorse. Scrim vinyl for banners, adhesive vinyl for windows and walls, cast vinyl for vehicle wraps."
+        },
+        {
+          "bold": "Fabric",
+          "text": "tension and dye-sublimated fabric for trade-show displays. Wrinkle-resistant, packs small, looks high-end."
+        }
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "File Prep: How to Send Art That Prints Sharp at Full Size"
+    },
+    {
+      "type": "p",
+      "text": "Most reprints and delays come down to file problems, not printing problems. Get these right and your job moves faster:"
+    },
+    {
+      "type": "bullets",
+      "items": [
+        {
+          "bold": "Vector beats raster for logos and text",
+          "text": "vector art (AI, EPS, PDF) scales to any size with zero blur. Use it for anything with crisp edges or type."
+        },
+        {
+          "bold": "Mind your DPI at actual size",
+          "text": "aim for 100-150 DPI at the final print size for large signs viewed up close, and 72-100 DPI for big banners viewed from a distance. A 4-foot banner needs a much larger file than a letter-size flyer."
+        },
+        {
+          "bold": "Add bleed",
+          "text": "extend your background 0.25\" past the edge so trimming doesn't leave a white sliver."
+        },
+        {
+          "bold": "Build in CMYK, not RGB",
+          "text": "screens use RGB; printers use CMYK. Convert early so the colour you approve is the colour you get. For brand-critical reds and blues, send a Pantone reference."
+        },
+        {
+          "bold": "Outline your fonts",
+          "text": "or include the font files, so your text doesn't reflow on our end."
+        }
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Not a designer? That's fine. Because we're end-to-end, our team can build print-ready artwork from your logo or a rough idea, and even handle the web and digital side so your branding is consistent everywhere."
+    },
+    {
+      "type": "h2",
+      "text": "Finishing & Mounting"
+    },
+    {
+      "type": "p",
+      "text": "Finishing is what turns a printed sheet into a finished sign that hangs straight and lasts. Depending on the product, that can include:"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Grommets and hemmed edges on banners for clean, tear-resistant hanging points",
+        "Lamination to protect against UV fade, scratches and moisture (key for floor and outdoor graphics)",
+        "Pole pockets and wind slits for banners exposed to Winnipeg's wind",
+        "Mounting to rigid substrates like Alupanel, PVC or foamcore",
+        "Contour cutting for custom shapes, decals and lettering",
+        "Professional installation, including permitted exterior signage fabricated to UL-certified standards"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Turnaround: Standard, Rush and Same-Day"
+    },
+    {
+      "type": "p",
+      "text": "Timeline is usually the real question. Standard large format jobs typically turn around in 2-4 business days once artwork is approved. When you're in a bind, 24-hour rush and same-day printing are available on many products, banners, posters and coroplast signs being the easiest to fast-track. Complex jobs like vehicle wraps or permitted exterior signs take longer because of fabrication and City of Winnipeg permit timelines, but we manage that whole process for you in-house so there's no chasing separate trades."
+    },
+    {
+      "type": "p",
+      "text": "Want exact numbers for your specific job? Send us your sizes, quantities and deadline and we'll send back a free, itemized quote in about two hours. Call +1-204-869-1503 or request a quote online, and we'll handle it from design to install."
+    },
+    {
+      "type": "cta",
+      "to": "/quote",
+      "text": "Get a free quote"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "How much does large format printing cost in Winnipeg?",
+      "a": "It depends on size, material and quantity, but vinyl banners typically run about $7-$12 per square foot, coroplast yard signs around $25-$45 each, and full vehicle wraps roughly $2,800-$4,500 installed. We send free itemized quotes within about two hours."
+    },
+    {
+      "q": "Do you offer same-day or rush printing?",
+      "a": "Yes. 24-hour and same-day printing is available on many products like banners, posters and coroplast signs once your artwork is approved. Call us at +1-204-869-1503 with your deadline and we'll tell you what's possible."
+    },
+    {
+      "q": "What file format should I send for large format printing?",
+      "a": "Send vector files (AI, EPS or print-ready PDF) for logos and text, built in CMYK with 0.25\" bleed. For photos, supply 100-150 DPI at the final print size. No print-ready file? We can build the artwork for you."
+    },
+    {
+      "q": "Do you handle sign permits in Winnipeg?",
+      "a": "Yes. We manage City of Winnipeg sign permits in-house as part of our end-to-end service, along with UL-certified fabrication and professional installation, so you don't have to coordinate separate trades or the permit process yourself."
+    },
+    {
+      "q": "What's the difference between large format and wide format printing?",
+      "a": "They mean the same thing. Both refer to printing on materials wider than a standard printer can handle, from banners and posters to vehicle-sized graphics, on substrates like vinyl, coroplast, fabric and aluminum panel."
+    }
+  ],
+  "relatedSlugs": [
+    "banner-printing-winnipeg",
+    "same-day-printing-winnipeg-guide"
+  ]
+},
   'led-channel-letter-sign-cost-winnipeg': {
     title: 'How Much Does an LED Channel Letter Sign Cost in Winnipeg?',
-    metaTitle: 'How Much Does an LED Channel Letter Sign Cost in Winnipeg? (2025 Guide)',
+    metaTitle: 'How Much Does an LED Channel Letter Sign Cost in Winnipeg? (2026 Guide)',
     metaDesc: 'LED channel letter sign costs in Winnipeg range from $5,000–$15,000+ depending on size, lighting, and installation. This guide breaks down every cost factor — no surprises.',
     category: 'Signs',
-    date: 'March 15, 2025',
+    date: 'March 15, 2026',
     readTime: '6 min read',
     heroImage: { src: '/image-assets/website_storefront.webp', alt: 'Custom LED channel letter sign illuminated on a Winnipeg storefront at night — OnBoard Print & Signs' },
     content: [
@@ -83,7 +1014,7 @@ const posts = {
         ['Large or complex sign (15+ letters, 24"+ tall, halo-lit)', '$10,000–$15,000+'],
         ['Multi-sign installation (e.g. plaza tenant with side signs)', 'Custom quote'],
       ]},
-      { type: 'p', text: 'Note: These ranges reflect the Winnipeg market in 2025. Prices vary based on material costs, design complexity, and installation conditions. Always get an itemized quote.' },
+      { type: 'p', text: 'Note: These ranges reflect the Winnipeg market in 2026. Prices vary based on material costs, design complexity, and installation conditions. Always get an itemized quote.' },
       { type: 'image', src: 'https://images.unsplash.com/photo-1728104435729-6e7ece4d92e3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', alt: 'Close-up of LED channel letter sign fabrication — aluminum returns and acrylic faces assembled in a Winnipeg sign shop' },
       { type: 'h2', text: "What's NOT Included in a Lot of Winnipeg Sign Quotes" },
       { type: 'p', text: 'Before you accept any quote, make sure you have clear answers to these questions:' },
@@ -115,7 +1046,7 @@ const posts = {
     metaTitle: 'Vehicle Wraps vs. Billboards: Which Gives Winnipeg Businesses Better ROI?',
     metaDesc: 'A wrapped van generates up to 70,000 impressions daily at a fraction of billboard cost. Here\'s the real ROI comparison for Winnipeg business owners — with the numbers.',
     category: 'Vehicle Wraps',
-    date: 'March 8, 2025',
+    date: 'March 8, 2026',
     readTime: '5 min read',
     heroImage: { src: 'https://images.unsplash.com/photo-1732690113224-e4230dd9a549?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', alt: 'Branded vehicle wrap on a commercial van — mobile advertising for Winnipeg businesses' },
     content: [
@@ -153,10 +1084,10 @@ const posts = {
 
   'sign-permit-guide-winnipeg': {
     title: 'The Complete Guide to Getting a Sign Permit in Winnipeg',
-    metaTitle: 'The Complete Guide to Getting a Sign Permit in Winnipeg (2025)',
+    metaTitle: 'The Complete Guide to Getting a Sign Permit in Winnipeg (2026)',
     metaDesc: 'Most Winnipeg businesses need a permit before installing any exterior sign. This guide explains who needs one, what\'s required, and how OnBoard handles the entire process for you.',
     category: 'Permits',
-    date: 'February 28, 2025',
+    date: 'February 28, 2026',
     readTime: '5 min read',
     heroImage: { src: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1600&q=80&auto=format&fit=crop', alt: 'Sign permit application documents and drawings prepared for City of Winnipeg submission' },
     content: [
@@ -197,7 +1128,7 @@ const posts = {
     metaTitle: 'Opening a New Business in Winnipeg? Your Complete Signage Checklist',
     metaDesc: 'Everything a new Winnipeg business needs to think about for signage — from storefront signs and vehicle wraps to permits, timelines, and budget planning. A practical checklist.',
     category: 'Business Tips',
-    date: 'February 20, 2025',
+    date: 'February 20, 2026',
     readTime: '6 min read',
     heroImage: { src: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1600&q=80&auto=format&fit=crop', alt: 'New business storefront with fresh exterior signage ready for opening day in Winnipeg' },
     content: [
@@ -270,7 +1201,7 @@ const posts = {
     metaTitle: 'Custom Wallpaper vs. Paint: Why Winnipeg Businesses Are Choosing Wall Murals',
     metaDesc: 'More Winnipeg restaurants, offices, and retailers are replacing paint with custom commercial wallpaper. Here\'s why — and what it actually costs compared to a paint job.',
     category: 'Print',
-    date: 'February 12, 2025',
+    date: 'February 12, 2026',
     readTime: '5 min read',
     heroImage: { src: 'https://images.unsplash.com/photo-1627815416399-ddaae0e2fa54?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', alt: 'Custom commercial wallpaper installed in a restaurant interior — branded wall mural in Winnipeg' },
     content: [
@@ -313,7 +1244,7 @@ const posts = {
     metaTitle: 'Cast vs. Calendared Vinyl: How to Choose the Right Vehicle Wrap Material',
     metaDesc: 'Cast vinyl and calendared vinyl are not the same thing. Using the wrong one is the most common vehicle wrap mistake. Here\'s how to choose for Winnipeg climate and your vehicle type.',
     category: 'Vehicle Wraps',
-    date: 'February 5, 2025',
+    date: 'February 5, 2026',
     readTime: '4 min read',
     heroImage: { src: 'https://images.unsplash.com/photo-1632605157148-6313421c504b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', alt: 'Cast vs calendared vinyl vehicle wrap — choosing the right material for Winnipeg climate and vehicle type' },
     content: [
@@ -350,7 +1281,7 @@ const posts = {
     metaTitle: 'Same-Day Printing in Winnipeg: What\'s Possible, What\'s Not, and How to Order',
     metaDesc: 'Need business cards, banners, or flyers printed today in Winnipeg? Here\'s what\'s actually possible for same-day and rush printing — and how to order without the stress.',
     category: 'Print',
-    date: 'January 28, 2025',
+    date: 'January 28, 2026',
     readTime: '4 min read',
     heroImage: { src: 'https://images.unsplash.com/photo-1662001234358-45b7493d2bc0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', alt: 'Same-day printing in Winnipeg — business cards and flyers printed fast by OnBoard Print & Signs' },
     content: [
@@ -383,14 +1314,14 @@ const posts = {
   'why-your-winnipeg-business-needs-a-website-not-just-a-sign': {
     title: 'Why Your Winnipeg Business Needs a Website — Not Just a Great Sign',
     metaTitle: 'Why Your Winnipeg Business Needs a Website — Not Just a Great Sign',
-    metaDesc: 'Your storefront sign gets people through the door. Your website gets them to find you first. Here\'s why Winnipeg businesses can\'t afford to choose one over the other in 2025.',
+    metaDesc: 'Your storefront sign gets people through the door. Your website gets them to find you first. Here\'s why Winnipeg businesses can\'t afford to choose one over the other in 2026.',
     category: 'Web Development',
-    date: 'January 20, 2025',
+    date: 'January 20, 2026',
     readTime: '5 min read',
     heroImage: { src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&q=80&auto=format&fit=crop', alt: 'Custom business website displayed on a laptop — web design and development for Winnipeg small businesses' },
     content: [
       { type: 'p', text: 'You spent $8,000 on a stunning LED channel letter sign. It looks incredible at night. People drive by and notice it. And then — they pull out their phone and Google your business name. What do they find? If the answer is "not much," or worse, "a competitor\'s website," you\'ve lost the customer that your sign just captured. Physical signage and a professional website aren\'t two separate investments. They\'re two halves of the same first impression.' },
-      { type: 'h2', text: 'The Way Customers Actually Find Businesses in 2025' },
+      { type: 'h2', text: 'The Way Customers Actually Find Businesses in 2026' },
       { type: 'p', text: 'The customer journey for most local businesses in Winnipeg looks like this: They see your sign, your vehicle wrap, or hear about you from someone. They Google your business name. They land on your website. They decide in 8 seconds whether to call you or go back and click the next result. Your sign gets them to step one. Your website determines whether they make it to step four.' },
       { type: 'h2', text: 'What a Professional Business Website Actually Does' },
       { type: 'p', text: 'A well-built business website isn\'t just a digital business card. When done right, it:' },
@@ -503,6 +1434,12 @@ function renderContent(block, i) {
           {/* TODO: Replace src with local image from public folder */}
           <img src={block.src} alt={block.alt} width={1600} height={900} loading="lazy" className="w-full h-auto object-cover" style={{ maxHeight: '420px' }} />
         </div>
+      );
+    case 'cta':
+      return (
+        <Link key={i} to={block.to} className="inline-flex items-center gap-2 mt-4 mb-2 px-7 py-3.5 font-heading font-semibold text-white no-underline" style={{ backgroundColor: '#E63B2E', borderRadius: '2rem' }}>
+          {block.text} <ArrowRight size={16} />
+        </Link>
       );
     default:
       return null;
